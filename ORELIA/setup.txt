@@ -1,0 +1,246 @@
+Material Workshop – Installation and Technical Documentation
+
+DATABASE SETUP
+1. Create a new database in phpMyAdmin
+   - Name: taller_material
+   - Collation: utf8mb4_unicode_ci (default)
+
+CONFIGURATION
+
+2. Open .env file and verify:
+   DB_CONNECTION=mysql
+   DB_HOST=127.0.0.1
+   DB_PORT=3306
+   DB_DATABASE=taller_material
+   DB_USERNAME=root
+   DB_PASSWORD= (leave empty if no password)
+
+INSTALLATION STEPS
+
+3. Install dependencies:
+   composer install
+   npm install && npm run build
+
+4. Generate application key:
+   php artisan key:generate
+
+5. Run migrations:
+   php artisan migrate
+
+6. Start the development server:
+   php artisan serve
+
+7. Access the application:
+   http://127.0.0.1:8000
+
+APPLICATION STRUCTURE
+---------------------
+Home Page (http://127.0.0.1:8000)
+   - Navigation to Material, User, and OrderItem sections
+
+MATERIAL SECTION (http://127.0.0.1:8000/materials)
+   - Create Material: Form with validation (name, type, description, color)
+   - List Materials: Table view of all materials
+   - View Details: Full material information with delete option
+   - Delete: Remove material with confirmation
+
+USER SECTION (http://127.0.0.1:8000/users)
+   - Create User: Form with validation (name, last_name, email, password, role, address)
+   - List Users: Table view of all users
+   - View Details: Full user information with delete option
+   - Delete: Remove user with confirmation
+
+ORDERITEM SECTION (http://127.0.0.1:8000/orderitems)
+   - Create Order Item: Form with validation (unit_price, quantity, order_id, piece_id)
+   - List Order Items: Table view of all order items
+   - View Details: Full order item information with delete option
+   - Delete: Remove order item with confirmation
+   - Subtotal Calculation: Automatically calculated as unit_price * quantity
+
+FEATURES
+
+CREATE
+   - Form validation for all required fields
+   - Material: name (unique), type, description, color
+   - User: name, last_name, email (unique), password (min 8 chars), role, address (optional)
+   - OrderItem: unit_price, quantity, order_id, piece_id
+
+READ
+   - List view with all records
+   - Detail view with full information
+   - Display formatted data with proper escaping
+
+UPDATE
+   - Edit forms for Material (prepared for future use)
+   - Edit forms for User (prepared for future use)
+   - Edit forms for OrderItem (prepared for future use)
+
+DELETE
+   - Remove records with confirmation popup
+   - Logs deletion events
+
+SECURITY FEATURES
+
+   - CSRF tokens on all forms (@csrf)
+   - XSS protection ({{ }} escaped output)
+   - Server-side validation before database operations
+   - Error handling with try-catch blocks
+   - Logging of all operations (info, warning, error levels)
+   - Password hashing with bcrypt
+   - Model mass-assignment protection ($fillable)
+   - Type hints on all methods and parameters
+
+ARCHITECTURE
+------------
+Framework: Laravel 12.x
+Database: MySQL 8+
+Frontend: Bootstrap 5.3
+Template Engine: Blade
+Language: PHP 8.2+
+Pattern: MVC (Model-View-Controller)
+
+MODELS
+
+Material
+   - Attributes: id, name, type, description, color, timestamps
+   - Methods: Getters/Setters for all attributes
+   
+User
+   - Attributes: id, name, last_name, email, password, role, address, timestamps
+   - Methods: Getters/Setters, authenticate()
+   - Relationships: hasMany('Order')
+   
+OrderItem
+   - Attributes: id, unit_price, quantity, subtotal, order_id, piece_id, timestamps
+   - Methods: Getters/Setters, calculateSubtotal()
+   - Relationships: belongsTo('Order'), belongsTo('Piece')
+   - Protected table: 'orderitems'
+
+CONTROLLERS
+
+MaterialController
+   - index(): Display home page
+   - create(): Show create form
+   - save(): Validate and store
+   - list(): Show all materials
+   - show(): Display details
+   - destroy(): Delete material
+
+UserController
+   - create(): Show create form
+   - store(): Validate and store
+   - index(): Show all users
+   - show(): Display details
+   - destroy(): Delete user
+
+OrderItemController
+   - create(): Show create form
+   - store(): Validate and store (calculates subtotal)
+   - index(): Show all order items
+   - show(): Display details
+   - destroy(): Delete order item
+
+All controllers include:
+   - Try-catch error handling
+   - Logging with Laravel Log facade
+   - Type hints for parameters and returns
+   - $viewData pattern for view data
+   - Flash messages on success/failure
+
+ROUTES
+
+Material Routes
+   GET  /              → material.index
+   GET  /materials/create  → material.create
+   POST /materials     → material.save
+   GET  /materials     → material.list
+   GET  /materials/{id}    → material.show
+   DELETE /materials/{id}  → material.destroy
+
+User Routes
+   GET  /users/create  → users.create
+   POST /users     → users.store
+   GET  /users     → users.index
+   GET  /users/{id}    → users.show
+   DELETE /users/{id}  → users.destroy
+
+OrderItem Routes
+   GET  /orderitems/create → orderitems.create
+   POST /orderitems    → orderitems.store
+   GET  /orderitems    → orderitems.index
+   GET  /orderitems/{id}   → orderitems.show
+   DELETE /orderitems/{id} → orderitems.destroy
+
+CODE STANDARDS
+
+   - All code and comments in English
+   - PascalCase for class names
+   - snake_case for database columns
+   - camelCase for variables and methods
+   - Type hints on all methods and parameters
+   - Getters: get_{attribute}() → type
+   - Setters: set_{attribute}(type) → void
+   - Comments explain WHY, not WHAT
+   - Author comment in every file
+   - No hardcoded URLs (use route() helper)
+   - Server-side validation mandatory
+   - Blade inheritance with layouts
+
+VALIDATION RULES
+
+Material
+   - name: required, string, max 255
+   - type: required, string, max 255
+   - description: required, string
+   - color: required, string, max 255
+
+User
+   - name: required, string, max 255
+   - last_name: required, string, max 255
+   - email: required, email, unique in users table
+   - password: required, string, min 8 characters
+   - role: required, string, max 50
+   - address: nullable, string, max 255
+
+OrderItem
+   - unit_price: required, integer, min 1
+   - quantity: required, integer, min 1
+   - order_id: required, integer
+   - piece_id: required, integer
+
+LOGS
+
+All operations logged to storage/logs/laravel.log
+   - Info: Successful CRUD operations
+   - Warning: Expected failures (record not found)
+   - Error: Unexpected failures (database errors)
+
+TROUBLESHOOTING
+
+Database connection error:
+   - Verify .env DB_* values match phpMyAdmin settings
+   - Ensure MySQL server is running
+   - Check database name exists
+
+Migration errors:
+   - Run: php artisan migrate:rollback (to undo)
+   - Check database permissions
+   - Verify table structure in phpmyadmin
+
+Route not found (404):
+   - Check route name in web.php
+   - Verify controller method exists
+   - Run: php artisan route:list (to see all routes)
+
+Form validation errors:
+   - Check @error() in view templates
+   - Verify old() helper for input retention
+   - Server-side validation in controller
+
+AUTHOR
+------
+Isabella Hernandez Posada
+Created: March 22, 2025
+Updated: March 22, 2025
+
+Repository: 
