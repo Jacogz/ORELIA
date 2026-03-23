@@ -6,55 +6,18 @@
 <div class="container mt-4">
   <h1>{{ $viewData['title'] }}</h1>
 
-  @if(session('success'))
-    <div class="alert alert-success">
-      {{ session('success') }}
-    </div>
-  @endif
-
   <div class="card">
     <div class="card-body">
       <h5 class="card-title">User Information</h5>
 
-      <div class="mb-3">
-        <label class="fw-bold">ID:</label>
-        <p>{{ $viewData['user']->get_id() }}</p>
-      </div>
-
-      <div class="mb-3">
-        <label class="fw-bold">Name:</label>
-        <p>{{ $viewData['user']->get_name() }}</p>
-      </div>
-
-      <div class="mb-3">
-        <label class="fw-bold">Last Name:</label>
-        <p>{{ $viewData['user']->get_last_name() }}</p>
-      </div>
-
-      <div class="mb-3">
-        <label class="fw-bold">Email:</label>
-        <p>{{ $viewData['user']->get_email() }}</p>
-      </div>
-
-      <div class="mb-3">
-        <label class="fw-bold">Role:</label>
-        <p>{{ $viewData['user']->get_role() }}</p>
-      </div>
-
-      <div class="mb-3">
-        <label class="fw-bold">Address:</label>
-        <p>{{ $viewData['user']->get_address() }}</p>
-      </div>
-
-      <div class="mb-3">
-        <label class="fw-bold">Created At:</label>
-        <p>{{ $viewData['user']->created_at }}</p>
-      </div>
-
-      <div class="mb-3">
-        <label class="fw-bold">Updated At:</label>
-        <p>{{ $viewData['user']->updated_at }}</p>
-      </div>
+      <p><strong>ID:</strong> {{ $viewData['user']->get_id() }}</p>
+      <p><strong>Name:</strong> {{ $viewData['user']->get_name() }}</p>
+      <p><strong>Last Name:</strong> {{ $viewData['user']->get_last_name() }}</p>
+      <p><strong>Email:</strong> {{ $viewData['user']->get_email() }}</p>
+      <p><strong>Role:</strong> {{ $viewData['user']->get_role() }}</p>
+      <p><strong>Address:</strong> {{ $viewData['user']->get_address() }}</p>
+      <p><strong>Created At:</strong> {{ $viewData['user']->created_at }}</p>
+      <p><strong>Updated At:</strong> {{ $viewData['user']->updated_at }}</p>
     </div>
   </div>
 
@@ -67,4 +30,4 @@
     </form>
   </div>
 </div>
-@endsection
+@endsection 
