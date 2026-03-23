@@ -16,6 +16,7 @@
               <tr>
                 <th>ID</th>
                 <th>Name</th>
+                <th>Actions</th>
               </tr>
             </thead>
             <tbody>
@@ -27,6 +28,14 @@
                     </a>
                   </td>
                   <td>{{ $material->get_name() }}</td>
+                  <td>
+                    <a href="{{ route('material.show', $material->get_id()) }}" class="btn btn-info btn-sm">View</a>
+                    <form action="{{ route('material.destroy', $material->get_id()) }}" method="POST" style="display:inline;">
+                      @csrf
+                      @method('DELETE')
+                      <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure?')">Delete</button>
+                    </form>
+                  </td>
                 </tr>
               @endforeach
             </tbody>

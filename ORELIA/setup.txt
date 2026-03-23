@@ -1,30 +1,64 @@
-Material Workshop – Installation and Technical Documentation
+ORELIA – Material Workshop Application
+Installation and Technical Documentation
 
 DATABASE SETUP
 1. Create a new database in phpMyAdmin
-   - Name: taller_material
+   - Name: orelia
    - Collation: utf8mb4_unicode_ci (default)
 
 CONFIGURATION
-
 2. Open .env file and verify:
    DB_CONNECTION=mysql
    DB_HOST=127.0.0.1
    DB_PORT=3306
-   DB_DATABASE=taller_material
+   DB_DATABASE=orelia
    DB_USERNAME=root
    DB_PASSWORD= (leave empty if no password)
 
+   NOTE: The .env file is hidden by default and may not be visible in the
+   file explorer. If it does not exist, create it by running:
+   copy .env.example .env
+
 INSTALLATION STEPS
+
+IMPORTANT – Folder structure:
+   The cloned repository has this structure:
+   ORELIA-1/          ← this is the Git root (do NOT run commands here)
+     └── ORELIA/      ← this is the Laravel project (run ALL commands here)
+
+   Before running any command, make sure you are inside the ORELIA folder:
+   cd C:\Users\ihernandp1\ORELIA\ORELIA-1\ORELIA
+
+   Your terminal should look like this before running any command:
+   C:\Users\ihernandp1\ORELIA\ORELIA-1\ORELIA>
 
 3. Install dependencies:
    composer install
    npm install && npm run build
 
+   NOTE: Run VS Code as Administrator before running composer install.
+   Right-click the VS Code icon and select "Run as administrator".
+   This prevents permission errors when composer writes files to the vendor folder.
+
+   If you get the error "Resource temporarily unavailable":
+   - Close VS Code and reopen it as Administrator
+   - If the error persists, delete the vendor folder and retry:
+     Remove-Item -Recurse -Force vendor
+     composer install
+   - If still failing, temporarily disable Windows Defender/antivirus,
+     run composer install, then re-enable it.
+
 4. Generate application key:
    php artisan key:generate
 
 5. Run migrations:
+   php artisan migrate
+
+   If you get "Table already exists" error:
+   php artisan migrate:fresh
+
+   If you get "Table sessions doesn't exist" error:
+   php artisan session:table
    php artisan migrate
 
 6. Start the development server:
@@ -34,7 +68,6 @@ INSTALLATION STEPS
    http://127.0.0.1:8000
 
 APPLICATION STRUCTURE
----------------------
 Home Page (http://127.0.0.1:8000)
    - Navigation to Material, User, and OrderItem sections
 
@@ -80,7 +113,6 @@ DELETE
    - Logs deletion events
 
 SECURITY FEATURES
-
    - CSRF tokens on all forms (@csrf)
    - XSS protection ({{ }} escaped output)
    - Server-side validation before database operations
@@ -91,7 +123,6 @@ SECURITY FEATURES
    - Type hints on all methods and parameters
 
 ARCHITECTURE
-------------
 Framework: Laravel 12.x
 Database: MySQL 8+
 Frontend: Bootstrap 5.3
@@ -104,12 +135,12 @@ MODELS
 Material
    - Attributes: id, name, type, description, color, timestamps
    - Methods: Getters/Setters for all attributes
-   
+
 User
    - Attributes: id, name, last_name, email, password, role, address, timestamps
    - Methods: Getters/Setters, authenticate()
    - Relationships: hasMany('Order')
-   
+
 OrderItem
    - Attributes: id, unit_price, quantity, subtotal, order_id, piece_id, timestamps
    - Methods: Getters/Setters, calculateSubtotal()
@@ -150,29 +181,28 @@ All controllers include:
 ROUTES
 
 Material Routes
-   GET  /              → material.index
-   GET  /materials/create  → material.create
-   POST /materials     → material.save
-   GET  /materials     → material.list
-   GET  /materials/{id}    → material.show
-   DELETE /materials/{id}  → material.destroy
+   GET    /                  → material.index
+   GET    /materials/create  → material.create
+   POST   /materials         → material.save
+   GET    /materials         → material.list
+   GET    /materials/{id}    → material.show
+   DELETE /materials/{id}    → material.destroy
 
 User Routes
-   GET  /users/create  → users.create
-   POST /users     → users.store
-   GET  /users     → users.index
-   GET  /users/{id}    → users.show
-   DELETE /users/{id}  → users.destroy
+   GET    /users/create  → users.create
+   POST   /users         → users.store
+   GET    /users         → users.index
+   GET    /users/{id}    → users.show
+   DELETE /users/{id}    → users.destroy
 
 OrderItem Routes
-   GET  /orderitems/create → orderitems.create
-   POST /orderitems    → orderitems.store
-   GET  /orderitems    → orderitems.index
-   GET  /orderitems/{id}   → orderitems.show
-   DELETE /orderitems/{id} → orderitems.destroy
+   GET    /orderitems/create  → orderitems.create
+   POST   /orderitems         → orderitems.store
+   GET    /orderitems         → orderitems.index
+   GET    /orderitems/{id}    → orderitems.show
+   DELETE /orderitems/{id}    → orderitems.destroy
 
 CODE STANDARDS
-
    - All code and comments in English
    - PascalCase for class names
    - snake_case for database columns
@@ -209,7 +239,6 @@ OrderItem
    - piece_id: required, integer
 
 LOGS
-
 All operations logged to storage/logs/laravel.log
    - Info: Successful CRUD operations
    - Warning: Expected failures (record not found)
@@ -217,15 +246,37 @@ All operations logged to storage/logs/laravel.log
 
 TROUBLESHOOTING
 
+.env file not found:
+   - The .env file is hidden by default in Windows
+   - Create it by running: copy .env.example .env
+   - Then open it in VS Code and verify the DB_* values
+
+Composer could not find a composer.json file:
+   - You are in the wrong folder
+   - Make sure your terminal shows:
+     C:\Users\ihernandp1\ORELIA\ORELIA-1\ORELIA>
+   - If not, run: cd C:\Users\ihernandp1\ORELIA\ORELIA-1\ORELIA
+
+Composer error – Resource temporarily unavailable:
+   - Close VS Code and reopen it as Administrator (right-click → Run as administrator)
+   - If it persists, delete the vendor folder and retry:
+     Remove-Item -Recurse -Force vendor
+     composer install
+   - If still failing, temporarily disable Windows Defender/antivirus,
+     run composer install, then re-enable it
+
+Table already exists error on migrate:
+   - Run: php artisan migrate:fresh
+   - This drops all tables and recreates them from scratch
+
+Table sessions doesn't exist:
+   - Run: php artisan session:table
+   - Then run: php artisan migrate
+
 Database connection error:
    - Verify .env DB_* values match phpMyAdmin settings
-   - Ensure MySQL server is running
-   - Check database name exists
-
-Migration errors:
-   - Run: php artisan migrate:rollback (to undo)
-   - Check database permissions
-   - Verify table structure in phpmyadmin
+   - Ensure MySQL server is running in XAMPP
+   - Check that the database orelia exists in phpMyAdmin
 
 Route not found (404):
    - Check route name in web.php
@@ -238,9 +289,8 @@ Form validation errors:
    - Server-side validation in controller
 
 AUTHOR
-------
 Isabella Hernandez Posada
-Created: March 22, 2025
-Updated: March 22, 2025
+Created: March 22, 2026
+Updated: March 22, 2026
 
-Repository: 
+Repository: https://github.com/Jacogz/ORELIA.git

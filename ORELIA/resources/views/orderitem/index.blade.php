@@ -8,22 +8,6 @@
 
   <a href="{{ route('orderitems.create') }}" class="btn btn-primary mb-3">Create Order Item</a>
 
-  @if($errors->any())
-    <div class="alert alert-danger">
-      <ul>
-        @foreach($errors->all() as $error)
-          <li>{{ $error }}</li>
-        @endforeach
-      </ul>
-    </div>
-  @endif
-
-  @if(session('success'))
-    <div class="alert alert-success">
-      {{ session('success') }}
-    </div>
-  @endif
-
   <table class="table table-striped">
     <thead>
       <tr>
