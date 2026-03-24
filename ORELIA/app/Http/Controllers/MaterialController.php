@@ -25,7 +25,7 @@ class MaterialController extends Controller
             'materials' => Material::all(),
         ];
 
-        return view('material.index', ['viewData' => $view_data]);
+        return view('material.index', ['view_data' => $view_data]);
     }
 
     /**
@@ -35,7 +35,7 @@ class MaterialController extends Controller
     {
         $view_data = ['title' => 'Create Material'];
 
-        return view('material.create', ['viewData' => $view_data]);
+        return view('material.create', ['view_data' => $view_data]);
     }
 
     /**
@@ -43,7 +43,7 @@ class MaterialController extends Controller
      */
     public function store(Request $request): RedirectResponse
     {
-        $validation_data = $request->validate([
+        $validated_data = $request->validate([
             'name'        => 'required|string|max:255',
             'type'        => 'required|string|max:255',
             'description' => 'required|string',
@@ -51,12 +51,13 @@ class MaterialController extends Controller
         ]);
 
         try {
-            Material::create($validation_data);
+            Material::create($validated_data);
 
-            Log::info('Material created', ['name' => $validation_data['name']]);
+            Log::info('Material created', ['name' => $validated_data['name']]);
 
             return redirect()->route('materials.index')
                 ->with('success', 'Material created successfully!');
+
         } catch (\Exception $e) {
             Log::error('Material creation failed', ['error' => $e->getMessage()]);
 
@@ -76,7 +77,8 @@ class MaterialController extends Controller
                 'material' => Material::findOrFail($id),
             ];
 
-            return view('material.show', ['viewData' => $view_data]);
+            return view('material.show', ['view_data' => $view_data]);
+
         } catch (\Exception $e) {
             Log::warning('Material not found', ['id' => $id]);
 
@@ -96,7 +98,8 @@ class MaterialController extends Controller
                 'material' => Material::findOrFail($id),
             ];
 
-            return view('material.edit', ['viewData' => $view_data]);
+            return view('material.edit', ['view_data' => $view_data]);
+
         } catch (\Exception $e) {
             Log::warning('Material not found for edit', ['id' => $id]);
 
@@ -110,7 +113,7 @@ class MaterialController extends Controller
      */
     public function update(Request $request, string $id): RedirectResponse
     {
-        $validation_data = $request->validate([
+        $validated_data = $request->validate([
             'name'        => 'required|string|max:255',
             'type'        => 'required|string|max:255',
             'description' => 'required|string',
@@ -119,16 +122,17 @@ class MaterialController extends Controller
 
         try {
             $material = Material::findOrFail($id);
-            $material->set_name($validation_data['name']);
-            $material->set_type($validation_data['type']);
-            $material->set_description($validation_data['description']);
-            $material->set_color($validation_data['color']);
+            $material->set_name($validated_data['name']);
+            $material->set_type($validated_data['type']);
+            $material->set_description($validated_data['description']);
+            $material->set_color($validated_data['color']);
             $material->save();
 
             Log::info('Material updated', ['id' => $id]);
 
             return redirect()->route('materials.show', $id)
                 ->with('success', 'Material updated successfully!');
+
         } catch (\Exception $e) {
             Log::error('Material update failed', ['id' => $id, 'error' => $e->getMessage()]);
 
@@ -149,6 +153,7 @@ class MaterialController extends Controller
 
             return redirect()->route('materials.index')
                 ->with('success', 'Material deleted successfully!');
+                
         } catch (\Exception $e) {
             Log::error('Material deletion failed', ['id' => $id, 'error' => $e->getMessage()]);
 

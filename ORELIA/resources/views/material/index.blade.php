@@ -1,14 +1,14 @@
 @extends('layouts.app')
 
-@section('title', $viewData['title'])
+@section('title', $view_data['title'])
 
 @section('content')
 <div class="container mt-4">
-  <h1>{{ $viewData['title'] }}</h1>
+  <h1>{{ $view_data['title'] }}</h1>
 
   <a href="{{ route('materials.create') }}" class="btn btn-primary mb-3">Create Material</a>
 
-  @if($viewData['materials']->count() > 0)
+  @if($view_data['materials']->count() > 0)
     <table class="table table-striped">
       <thead>
         <tr>
@@ -21,7 +21,7 @@
         </tr>
       </thead>
       <tbody>
-        @foreach($viewData['materials'] as $material)
+        @foreach($view_data['materials'] as $material)
         <tr>
           <td>{{ $material->get_id() }}</td>
           <td>{{ $material->get_name() }}</td>
