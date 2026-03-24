@@ -60,7 +60,7 @@
 
   <div class="mt-3">
     <a href="{{ route('orderitems.index') }}" class="btn btn-secondary">Back to List</a>
-    <form action="{{ route('orderitems.destroy', $view_data['orderitem']->get_id()) }}" method="POST" style="display:inline;">
+    <form action="{{ route('orderitems.delete', $view_data['orderitem']->get_id()) }}" method="POST" style="display:inline;">
       @csrf
       @method('DELETE')
       <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this order item?')">Delete Order Item</button>

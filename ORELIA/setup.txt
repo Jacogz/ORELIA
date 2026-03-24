@@ -27,14 +27,13 @@ IMPORTANT – Folder structure:
      └── ORELIA/      ← this is the Laravel project (run ALL commands here)
 
    Before running any command, make sure you are inside the ORELIA folder:
-   cd C:\Users\ihernandp1\ORELIA\ORELIA-1\ORELIA
+   cd C:\Users\ihernandp1\ORELIA\ORELIA
 
    Your terminal should look like this before running any command:
-   C:\Users\ihernandp1\ORELIA\ORELIA-1\ORELIA>
+   C:\Users\ihernandp1\ORELIA\ORELIA>
 
 3. Install dependencies:
    composer install
-   npm install && npm run build
 
    NOTE: Run VS Code as Administrator before running composer install.
    Right-click the VS Code icon and select "Run as administrator".

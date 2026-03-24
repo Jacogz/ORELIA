@@ -23,14 +23,14 @@
               @foreach($view_data['materials'] as $material)
                 <tr>
                   <td>
-                    <a href="{{ route('material.show', $material->get_id()) }}" class="btn btn-sm btn-info">
+                    <a href="{{ route('materials.show', $material->get_id()) }}" class="btn btn-sm btn-info">
                       {{ $material->get_id() }}
                     </a>
                   </td>
                   <td>{{ $material->get_name() }}</td>
                   <td>
-                    <a href="{{ route('material.show', $material->get_id()) }}" class="btn btn-info btn-sm">View</a>
-                    <form action="{{ route('material.destroy', $material->get_id()) }}" method="POST" style="display:inline;">
+                    <a href="{{ route('materials.show', $material->get_id()) }}" class="btn btn-info btn-sm">View</a>
+                    <form action="{{ route('materials.delete', $material->get_id()) }}" method="POST" style="display:inline;">
                       @csrf
                       @method('DELETE')
                       <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure?')">Delete</button>
@@ -42,7 +42,7 @@
           </table>
         @else
           <div class="alert alert-info">
-            No materials found. <a href="{{ route('material.create') }}">Create one</a>
+            No materials found. <a href="{{ route('materials.create') }}">Create one</a>
           </div>
         @endif
       </div>

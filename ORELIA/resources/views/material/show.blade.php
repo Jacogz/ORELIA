@@ -49,14 +49,8 @@
         </div>
 
         <div class="d-flex gap-2">
-  <a href="{{ route('materials.index') }}" class="btn btn-secondary">Back</a>
-  <a href="{{ route('materials.edit', $view_data['material']->get_id()) }}" class="btn btn-warning">Edit</a>
-  <form method="POST" action="{{ route('materials.destroy', $view_data['material']->get_id()) }}" style="display:inline;">
-    @csrf
-    @method('DELETE')
-    <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure?')">Delete</button>
-  </form>
-</div>
+          <a href="{{ route('materials.index') }}" class="btn btn-secondary">Back</a>
+        </div>
       </div>
     </div>
   </div>

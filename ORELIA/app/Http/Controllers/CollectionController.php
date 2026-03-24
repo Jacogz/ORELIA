@@ -6,7 +6,7 @@
  * Created: 2026-03-24
  */
 
-namespace App\Http\Controllers\Client;
+namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 
@@ -51,4 +51,6 @@ class CollectionController extends Controller
                 ->withErrors(['error' => 'Collection not found.']);
         }
     }
+
+    
 }

@@ -6,8 +6,6 @@
 <div class="container mt-4">
   <h1>{{ $view_data['title'] }}</h1>
 
-  <a href="{{ route('materials.create') }}" class="btn btn-primary mb-3">Create Material</a>
-
   @if($view_data['materials']->count() > 0)
     <table class="table table-striped">
       <thead>
@@ -31,12 +29,6 @@
 
           <td>
             <a href="{{ route('materials.show', $material->get_id()) }}" class="btn btn-info btn-sm">View</a>
-            <form action="{{ route('materials.destroy', $material->get_id()) }}" method="POST" style="display:inline;">
-              @csrf
-              @method('DELETE')
-              <button type="submit" class="btn btn-danger btn-sm"
-                onclick="return confirm('Are you sure?')">Delete</button>
-            </form>
           <tr>
         @endforeach
       </tbody>

@@ -20,7 +20,7 @@
       <div class="card">
         <div class="card-body">
           <h5 class="card-title">Users</h5>
-          <a href="{{ route('users.index') }}" class="btn btn-primary">Manage Users</a>
+          <a href="{{ route('admin.users.index') }}" class="btn btn-primary">Manage Users</a>
         </div>
       </div>
     </div>

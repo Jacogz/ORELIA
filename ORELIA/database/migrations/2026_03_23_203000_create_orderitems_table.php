@@ -22,6 +22,11 @@ return new class extends Migration
                 $table->timestamps();
             });
         }
+
+        Schema::table('orderitems', function (Blueprint $table) {
+            $table->foreign('order_id')->references('id')->on('orders')->cascadeOnDelete();
+            $table->foreign('piece_id')->references('id')->on('pieces')->cascadeOnDelete();
+        });
     }
 
     /**

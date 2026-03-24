@@ -6,7 +6,7 @@
  * Created: 2026-03-24
  */
 
-namespace App\Http\Controllers\Client;
+namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Models\Order;
@@ -26,7 +26,7 @@ class OrderController extends Controller
             'orders' => Order::with('client')->get(),
         ];
 
-        return view('order.index', ['viewData' => $view_data]);
+        return view('orders.index', ['viewData' => $view_data]);
     }
 
     /**
@@ -42,7 +42,7 @@ class OrderController extends Controller
                 'order' => $order,
             ];
 
-            return view('order.show', ['viewData' => $view_data]);
+            return view('orders.show', ['viewData' => $view_data]);
         } catch (\Exception $e) {
             Log::warning('Order not found', ['id' => $id]);
 

@@ -10,7 +10,7 @@
 <body>
     <nav class="navbar navbar-expand-lg navbar-dark py-4">
         <div class="container">
-            <a class="navbar-brand fw-bold" href="{{ route('home.index') }}">ORELIA</a>
+            <a class="navbar-brand fw-bold" href="{{ route('pieces.index') }}">ORELIA</a>
 
             <div class="d-flex align-items-center ms-auto">
                 <a class="nav-link" href="{{ route('materials.index') }}">Catalog</a>
@@ -25,14 +25,14 @@
                     @endif
 
                     <span class="me-3">Hola, {{ Auth::user()->get_name() }}</span>
-                    <form action="{{ route('login.logout') }}" method="POST" class="mb-0">
+                    <form action="{{ route('users.logout') }}" method="POST" class="mb-0">
                         @csrf
                         <button type="submit" class="btn btn-secondary btn-sm">Cerrar Sesion</button>
                     </form>
                 @endauth
 
                 @guest
-                    <a class="btn btn-primary btn-sm ms-2" href="{{ route('login.index') }}">Login</a>
+                    <a class="btn btn-primary btn-sm ms-2" href="{{ route('users.login') }}">Login</a>
                 @endguest
             </div>
         </div>

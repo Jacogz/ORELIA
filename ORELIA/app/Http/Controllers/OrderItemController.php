@@ -6,7 +6,7 @@
  * Created: 2026-03-22
  */
 
-namespace App\Http\Controllers\Client;
+namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 
@@ -24,7 +24,7 @@ class OrderItemController extends Controller
     public function create(): View
     {
         $view_data = ['title' => 'Create Order Item'];
-        return view('orderitem.create', ['view_data' => $view_data]);
+        return view('orderitems.create', ['view_data' => $view_data]);
     }
 
     /**
@@ -32,7 +32,7 @@ class OrderItemController extends Controller
      */
     public function store(Request $request): RedirectResponse
     {
-        $validated_data = $request->validate([
+        $validation_data = $request->validate([
             'unit_price' => 'required|integer|min:1',
             'quantity'   => 'required|integer|min:1',
             'order_id'   => 'required|integer',
@@ -40,9 +40,9 @@ class OrderItemController extends Controller
         ]);
 
         try {
-            $validated_data['subtotal'] = $validated_data['unit_price'] * $validated_data['quantity'];
+            $validation_data['subtotal'] = $validation_data['unit_price'] * $validation_data['quantity'];
 
-            $orderitem = OrderItem::create($validated_data);
+            $orderitem = OrderItem::create($validation_data);
 
             Log::info('Order item created', ['orderitem_id' => $orderitem->id]);
 
@@ -67,7 +67,7 @@ class OrderItemController extends Controller
             'orderitems' => OrderItem::all(),
         ];
 
-        return view('orderitem.index', ['view_data' => $view_data]);
+        return view('orderitems.index', ['view_data' => $view_data]);
     }
 
     /**
@@ -81,7 +81,7 @@ class OrderItemController extends Controller
                 'orderitem' => OrderItem::findOrFail($id),
             ];
 
-            return view('orderitem.show', ['view_data' => $view_data]);
+            return view('orderitems.show', ['view_data' => $view_data]);
 
         } catch (\Exception $e) {
             Log::warning('Order item not found', ['id' => $id]);
@@ -94,7 +94,7 @@ class OrderItemController extends Controller
     /**
      * Delete an order item from database
      */
-    public function destroy(string $id): RedirectResponse
+    public function delete(string $id): RedirectResponse
     {
         try {
             OrderItem::findOrFail($id)->delete();

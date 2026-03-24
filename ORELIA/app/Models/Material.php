@@ -157,7 +157,7 @@ class Material extends Model
      * Get all pieces that use this material
      * Many materials belong to many pieces
      *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     * @return BelongsToMany
      */
     public function pieces(): BelongsToMany
     {

@@ -1,56 +1,68 @@
 <?php
 
-use App\Http\Controllers\Admin\AdminController;
-use App\Http\Controllers\Admin\AdminMaterialController;
-use App\Http\Controllers\Admin\AdminUserController;
-use App\Http\Controllers\Client\CollectionController;
-use App\Http\Controllers\Client\MaterialController;
-use App\Http\Controllers\Client\OrderController;
-use App\Http\Controllers\Client\OrderItemController;
-use App\Http\Controllers\Client\PieceController;
-use App\Http\Controllers\Client\UserController;
+use App\Http\Controllers\AdminController;
+use App\Http\Controllers\CollectionController;
+use App\Http\Controllers\MaterialController;
+use App\Http\Controllers\OrderController;
+use App\Http\Controllers\OrderItemController;
+use App\Http\Controllers\PieceController;
+use App\Http\Controllers\UserController;
+
 use Illuminate\Support\Facades\Route;
 
-// Authentication
-Route::get('/login', [UserController::class, 'login'])->name('login.index');
-Route::post('/login', [UserController::class, 'authenticate'])->name('login.authenticate');
-Route::post('/logout', [UserController::class, 'logout'])->name('login.logout');
+// Pieces ---------------------------------
+// Public routes
+Route::get('/',                                 [PieceController::class, 'index'])->name('pieces.index');
+Route::get('/pieces/{id}',                      [PieceController::class, 'show'])->name('pieces.show');
+// Admin routes
+Route::get('/admin/pieces/create',              [PieceController::class, 'create'])->name('pieces.create');
+Route::post('/admin/pieces',                    [PieceController::class, 'store'])->name('pieces.store');
+Route::get('/admin/pieces/{id}/edit',           [PieceController::class, 'edit'])->name('pieces.edit');
+Route::put('/admin/pieces/{id}',                [PieceController::class, 'update'])->name('pieces.update');
+Route::delete('/admin/pieces/{id}',             [PieceController::class, 'delete'])->name('pieces.delete');
 
-// Final user section (read-only views)
-Route::get('/', [MaterialController::class, 'index'])->name('home.index');
-Route::get('/materials', [MaterialController::class, 'index'])->name('materials.index');
-Route::get('/materials/{id}', [MaterialController::class, 'show'])->name('materials.show');
-Route::get('/collections', [CollectionController::class, 'index'])->name('collections.index');
-Route::get('/collections/{id}', [CollectionController::class, 'show'])->name('collections.show');
-Route::get('/pieces', [PieceController::class, 'index'])->name('pieces.index');
-Route::get('/pieces/{id}', [PieceController::class, 'show'])->name('pieces.show');
+// Materials ---------------------------------
+// Public routes
+Route::get('/materials',                        [MaterialController::class, 'index'])->name('materials.index');
+Route::get('/materials/{id}',                   [MaterialController::class, 'show'])->name('materials.show');
+// Admin routes
+Route::get('/admin/materials/create',           [MaterialController::class, 'create'])->name('materials.create');
+Route::post('/admin/materials',                 [MaterialController::class, 'store'])->name('materials.store');
+Route::get('/admin/materials/{id}/edit',        [MaterialController::class, 'edit'])->name('materials.edit');
+Route::put('/admin/materials/{id}',             [MaterialController::class, 'update'])->name('materials.update');
+Route::delete('/admin/materials/{id}',          [MaterialController::class, 'delete'])->name('materials.delete');
+
+// Collections ---------------------------------
+// Public routes
+Route::get('/collections',                      [CollectionController::class, 'index'])->name('collections.index');
+Route::get('/collections/{id}',                 [CollectionController::class, 'show'])->name('collections.show');
+
+// Orders --------------------------------------
+// Public routes
 Route::get('/orders', [OrderController::class, 'index'])->name('orders.index');
-Route::get('/orders/{id}', [OrderController::class, 'show'])->name('orders.show');
-Route::get('/orderitems', [OrderItemController::class, 'index'])->name('orderitems.index');
-Route::get('/orderitems/{id}', [OrderItemController::class, 'show'])->name('orderitems.show');
+Route::get('/orders/{id}',                      [OrderController::class, 'show'])->name('orders.show');
 
-// Admin section (independent views and controllers)
-Route::middleware(['admin'])
-    ->prefix('admin')
-    ->name('admin.')
-    ->group(function () {
-        Route::get('/', [AdminController::class, 'index'])->name('index');
+// Oder Items -----------------------------------
+//Public routes
+Route::get('/orderitems',                       [OrderItemController::class, 'index'])->name('orderitems.index');
+Route::get('/orderitems/{id}',                  [OrderItemController::class, 'show'])->name('orderitems.show');
+// Admin routes
+Route::get('/admin/orderitems/create',          [OrderItemController::class, 'create'])->name('orderitems.create');
+Route::post('/admin/orderitems',                [OrderItemController::class, 'store'])->name('orderitems.store');
+Route::get('/admin/orderitems/{id}/edit',       [OrderItemController::class, 'edit'])->name('orderitems.edit');
+Route::put('/admin/orderitems/{id}',            [OrderItemController::class, 'update'])->name('orderitems.update');
+Route::delete('/admin/orderitems/{id}',         [OrderItemController::class, 'delete'])->name('orderitems.delete');
 
-        // Admin Material CRUD (complete)
-        Route::get('/materials', [AdminMaterialController::class, 'index'])->name('materials.index');
-        Route::get('/materials/create', [AdminMaterialController::class, 'create'])->name('materials.create');
-        Route::post('/materials', [AdminMaterialController::class, 'store'])->name('materials.store');
-        Route::get('/materials/{id}', [AdminMaterialController::class, 'show'])->name('materials.show');
-        Route::get('/materials/{id}/edit', [AdminMaterialController::class, 'edit'])->name('materials.edit');
-        Route::put('/materials/{id}', [AdminMaterialController::class, 'update'])->name('materials.update');
-        Route::delete('/materials/{id}', [AdminMaterialController::class, 'destroy'])->name('materials.destroy');
+// Users --------------------------------------
+// Public routes
+Route::get('/users/login',                      [UserController::class, 'login'])->name('users.login');
+Route::post('/users/authenticate',              [UserController::class, 'authenticate'])->name('users.authenticate');
+Route::post('/users/logout',                    [UserController::class, 'logout'])->name('users.logout');
+// Admin routes
+Route::get('/admin/users',                      [AdminUserController::class, 'index'])->name('admin.users.index');
+Route::get('/admin/users/create',               [AdminUserController::class, 'create'])->name('admin.users.create');
+Route::post('/admin/users',                     [AdminUserController::class, 'store'])->name('admin.users.store');
+Route::get('/admin/users/{id}',                 [AdminUserController::class, 'show'])->name('admin.users.show');
 
-        // Admin User CRUD (complete)
-        Route::get('/users', [AdminUserController::class, 'index'])->name('users.index');
-        Route::get('/users/create', [AdminUserController::class, 'create'])->name('users.create');
-        Route::post('/users', [AdminUserController::class, 'store'])->name('users.store');
-        Route::get('/users/{id}', [AdminUserController::class, 'show'])->name('users.show');
-        Route::get('/users/{id}/edit', [AdminUserController::class, 'edit'])->name('users.edit');
-        Route::put('/users/{id}', [AdminUserController::class, 'update'])->name('users.update');
-        Route::delete('/users/{id}', [AdminUserController::class, 'destroy'])->name('users.destroy');
-    });
+// Admin Dashboard ---------------------------------------
+Route::get('/admin',                            [AdminController::class, 'index'])->name('admin.index');

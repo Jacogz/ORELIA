@@ -5,7 +5,7 @@
  * Description: Handles CRUD operations for Materials
  */
 
-namespace App\Http\Controllers\Client;
+namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 
@@ -27,7 +27,7 @@ class MaterialController extends Controller
             'materials' => Material::all(),
         ];
 
-        return view('material.index', ['view_data' => $view_data]);
+        return view('materials.index', ['view_data' => $view_data]);
     }
 
     /**
@@ -37,7 +37,7 @@ class MaterialController extends Controller
     {
         $view_data = ['title' => 'Create Material'];
 
-        return view('material.create', ['view_data' => $view_data]);
+        return view('materials.create', ['view_data' => $view_data]);
     }
 
     /**
@@ -45,7 +45,7 @@ class MaterialController extends Controller
      */
     public function store(Request $request): RedirectResponse
     {
-        $validated_data = $request->validate([
+        $validation_data = $request->validate([
             'name'        => 'required|string|max:255',
             'type'        => 'required|string|max:255',
             'description' => 'required|string',
@@ -53,9 +53,9 @@ class MaterialController extends Controller
         ]);
 
         try {
-            Material::create($validated_data);
+            Material::create($validation_data);
 
-            Log::info('Material created', ['name' => $validated_data['name']]);
+            Log::info('Material created', ['name' => $validation_data['name']]);
 
             return redirect()->route('materials.index')
                 ->with('success', 'Material created successfully!');
@@ -79,7 +79,7 @@ class MaterialController extends Controller
                 'material' => Material::findOrFail($id),
             ];
 
-            return view('material.show', ['view_data' => $view_data]);
+            return view('materials.show', ['view_data' => $view_data]);
 
         } catch (\Exception $e) {
             Log::warning('Material not found', ['id' => $id]);
@@ -100,7 +100,7 @@ class MaterialController extends Controller
                 'material' => Material::findOrFail($id),
             ];
 
-            return view('material.edit', ['view_data' => $view_data]);
+            return view('materials.edit', ['view_data' => $view_data]);
 
         } catch (\Exception $e) {
             Log::warning('Material not found for edit', ['id' => $id]);
@@ -115,7 +115,7 @@ class MaterialController extends Controller
      */
     public function update(Request $request, string $id): RedirectResponse
     {
-        $validated_data = $request->validate([
+        $validation_data = $request->validate([
             'name'        => 'required|string|max:255',
             'type'        => 'required|string|max:255',
             'description' => 'required|string',
@@ -124,10 +124,10 @@ class MaterialController extends Controller
 
         try {
             $material = Material::findOrFail($id);
-            $material->set_name($validated_data['name']);
-            $material->set_type($validated_data['type']);
-            $material->set_description($validated_data['description']);
-            $material->set_color($validated_data['color']);
+            $material->set_name($validation_data['name']);
+            $material->set_type($validation_data['type']);
+            $material->set_description($validation_data['description']);
+            $material->set_color($validation_data['color']);
             $material->save();
 
             Log::info('Material updated', ['id' => $id]);
@@ -146,7 +146,7 @@ class MaterialController extends Controller
     /**
      * Delete a material
      */
-    public function destroy(string $id): RedirectResponse
+    public function delete(string $id): RedirectResponse
     {
         try {
             Material::findOrFail($id)->delete();

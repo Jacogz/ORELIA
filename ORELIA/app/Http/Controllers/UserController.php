@@ -5,7 +5,7 @@
  * Description: Handles user authentication and CRUD operations
  */
 
-namespace App\Http\Controllers\Client;
+namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 
@@ -56,7 +56,7 @@ class UserController extends Controller
             return redirect()->route('admin.index');
         }
 
-        return redirect()->route('home.index'); 
+        return redirect()->route('pieces.index'); 
     }
 
     /**
@@ -70,7 +70,7 @@ class UserController extends Controller
         $request->session()->invalidate();
         $request->session()->regenerateToken();
 
-        return redirect()->route('login.index');
+        return redirect()->route('users.login');
     }
 
     /**
@@ -78,7 +78,7 @@ class UserController extends Controller
      */
     public function create(): View
     {
-        return view('user.create', ['viewData' => ['title' => 'Create User']]);
+        return view('users.create', ['viewData' => ['title' => 'Create User']]);
     }
 
     /**
@@ -101,13 +101,13 @@ class UserController extends Controller
 
             Log::info('User created', ['user_id' => $user->id]);
 
-            return redirect()->route('users.index')
+            return redirect()->route('admin.users.index')
                 ->with('success', 'User created successfully.');
 
         } catch (\Exception $e) {
             Log::error('User creation failed', ['error' => $e->getMessage()]);
 
-            return redirect()->route('users.create')
+            return redirect()->route('admin.users.create')
                 ->withErrors(['error' => 'User could not be created.']);
         }
     }
@@ -122,7 +122,7 @@ class UserController extends Controller
             'users' => User::all(),
         ];
 
-        return view('user.index', ['viewData' => $view_data]);
+        return view('users.index', ['viewData' => $view_data]);
     }
 
     /**
@@ -136,12 +136,12 @@ class UserController extends Controller
                 'user'  => User::findOrFail($id),
             ];
 
-            return view('user.show', ['viewData' => $view_data]);
+            return view('users.show', ['viewData' => $view_data]);
 
         } catch (ModelNotFoundException $e) {
             Log::warning('User not found', ['id' => $id]);
 
-            return redirect()->route('users.index')
+            return redirect()->route('admin.users.index')
                 ->withErrors(['error' => 'User not found.']);
         }
     }
@@ -149,14 +149,14 @@ class UserController extends Controller
     /**
      * Delete a user
      */
-    public function destroy(string $id): RedirectResponse
+    public function delete(string $id): RedirectResponse
     {
         try {
             User::findOrFail($id)->delete();
 
             Log::info('User deleted', ['user_id' => $id]);
 
-            return redirect()->route('users.index')
+            return redirect()->route('admin.users.index')
                 ->with('success', 'User deleted successfully.');
 
         } catch (\Exception $e) {
@@ -165,7 +165,7 @@ class UserController extends Controller
                 'error' => $e->getMessage()
             ]);
 
-            return redirect()->route('users.index')
+            return redirect()->route('admin.users.index')
                 ->withErrors(['error' => 'User could not be deleted.']);
         }
     }

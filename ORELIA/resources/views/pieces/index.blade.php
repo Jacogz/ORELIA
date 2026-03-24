@@ -1,12 +1,12 @@
 @extends('layouts.app')
 
-@section('title', $viewData['title'])
+@section('title', $view_data['title'])
 
 @section('content')
 <div class="container mt-4">
-  <h1>{{ $viewData['title'] }}</h1>
+  <h1>{{ $view_data['title'] }}</h1>
 
-  @if($viewData['pieces']->count() > 0)
+  @if($view_data['pieces']->count() > 0)
     <table class="table table-striped">
       <thead>
         <tr>
@@ -19,7 +19,7 @@
         </tr>
       </thead>
       <tbody>
-        @foreach($viewData['pieces'] as $piece)
+        @foreach($view_data['pieces'] as $piece)
           <tr>
             <td>{{ $piece->get_id() }}</td>
             <td>{{ $piece->get_name() }}</td>

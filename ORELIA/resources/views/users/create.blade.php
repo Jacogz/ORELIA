@@ -6,7 +6,7 @@
 <div class="container mt-4">
   <h1>{{ $view_data['title'] }}</h1>
 
-  <form action="{{ route('users.store') }}" method="POST">
+  <form action="{{ route('admin.users.store') }}" method="POST">
     @csrf
 
     <div class="mb-3">
@@ -62,7 +62,7 @@
     </div>
 
     <button type="submit" class="btn btn-primary">Create User</button>
-    <a href="{{ route('users.index') }}" class="btn btn-secondary">Cancel</a>
+    <a href="{{ route('admin.users.index') }}" class="btn btn-secondary">Cancel</a>
   </form>
 </div>
 @endsection
