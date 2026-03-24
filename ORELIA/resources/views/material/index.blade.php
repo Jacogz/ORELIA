@@ -1,12 +1,14 @@
 @extends('layouts.app')
 
-@section('title', $viewData['title'])
+@section('title', $view_data['title'])
 
 @section('content')
 <div class="container mt-4">
-  <h1>{{ $viewData['title'] }}</h1>
+  <h1>{{ $view_data['title'] }}</h1>
 
-  @if($viewData['materials']->count() > 0)
+  <a href="{{ route('materials.create') }}" class="btn btn-primary mb-3">Create Material</a>
+
+  @if($view_data['materials']->count() > 0)
     <table class="table table-striped">
       <thead>
         <tr>
@@ -19,17 +21,23 @@
         </tr>
       </thead>
       <tbody>
-        @foreach($viewData['materials'] as $material)
+        @foreach($view_data['materials'] as $material)
         <tr>
           <td>{{ $material->get_id() }}</td>
           <td>{{ $material->get_name() }}</td>
           <td>{{ $material->get_type() }}</td>
           <td>{{ $material->get_description() }}</td>
           <td>{{ $material->get_color() }}</td>
+
           <td>
             <a href="{{ route('materials.show', $material->get_id()) }}" class="btn btn-info btn-sm">View</a>
-          </td>
-        </tr>
+            <form action="{{ route('materials.destroy', $material->get_id()) }}" method="POST" style="display:inline;">
+              @csrf
+              @method('DELETE')
+              <button type="submit" class="btn btn-danger btn-sm"
+                onclick="return confirm('Are you sure?')">Delete</button>
+            </form>
+          <tr>
         @endforeach
       </tbody>
     </table>

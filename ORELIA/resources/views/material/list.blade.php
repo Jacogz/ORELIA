@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', $viewData['title'])
+@section('title', $view_data['title'])
 
 @section('content')
 <div class="row">
@@ -10,7 +10,7 @@
         <h3 class="mb-0">Materials List</h3>
       </div>
       <div class="card-body">
-        @if($viewData['materials']->count() > 0)
+        @if($view_data['materials']->count() > 0)
           <table class="table table-striped table-hover">
             <thead class="table-dark">
               <tr>
@@ -20,7 +20,7 @@
               </tr>
             </thead>
             <tbody>
-              @foreach($viewData['materials'] as $material)
+              @foreach($view_data['materials'] as $material)
                 <tr>
                   <td>
                     <a href="{{ route('material.show', $material->get_id()) }}" class="btn btn-sm btn-info">

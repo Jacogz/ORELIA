@@ -10,6 +10,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Order;
+use App\Models\Piece;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class OrderItem extends Model
@@ -153,7 +155,7 @@ class OrderItem extends Model
      */
     public function order(): BelongsTo
     {
-        return $this->belongsTo('App\Models\Order');
+        return $this->belongsTo(Order::class);
     }
 
     /**
@@ -163,7 +165,7 @@ class OrderItem extends Model
      */
     public function piece(): BelongsTo
     {
-        return $this->belongsTo('App\Models\Piece');
+       return $this->belongsTo(Piece::class);
     }
 
     /**

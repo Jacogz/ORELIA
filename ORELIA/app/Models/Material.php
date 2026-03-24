@@ -3,12 +3,13 @@
  * Author: Isabella Hernandez Posada
  * File: Material.php
  * Description: Material model with getters/setters
- * Created: 2025-03-22
+ * Created: 2026-03-22
  */
 
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Piece;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Material extends Model
@@ -82,6 +83,27 @@ class Material extends Model
     }
 
     /**
+     * Get the creation date
+     *
+     * @return string
+     */
+    public function get_created_at(): string
+    {
+        return $this->attributes['created_at'];
+    }
+
+    /**
+     * Get the last update date
+     *
+     * @return string
+     */
+    public function get_updated_at(): string
+    {
+        return $this->attributes['updated_at'];
+    }
+
+
+    /**
      * Set the material name
      *
      * @param string $name
@@ -120,18 +142,25 @@ class Material extends Model
      * @param string $color
      * @return void
      */
+    /**
+     * Set the material color
+     *
+     * @param string $color
+     * @return void
+     */
     public function set_color(string $color): void
     {
         $this->attributes['color'] = $color;
     }
 
     /**
-     * Get the pieces associated with this material
+     * Get all pieces that use this material
+     * Many materials belong to many pieces
      *
-     * @return BelongsToMany
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
     public function pieces(): BelongsToMany
     {
-        return $this->belongsToMany('App\\Models\\Piece', 'material_piece', 'material_id', 'piece_id');
+        return $this->belongsToMany(Piece::class, 'material_piece');
     }
 }

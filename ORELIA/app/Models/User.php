@@ -2,7 +2,7 @@
 /*
  * Author: Isabella Hernandez Posada
  * File: User.php
- * Description: User model with getters/setters, relationships, and authentication
+ * Description: User model with getters/setters and relationships
  * Created: 2025-03-22
  */
 
@@ -11,6 +11,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use App\Models\Order;
 
 class User extends Authenticatable
 {
@@ -197,20 +198,6 @@ class User extends Authenticatable
      */
     public function orders()
     {
-        return $this->hasMany('App\Models\Order');
-    }
-
-    /**
-     * Authenticate user with email and password
-     * Checks if user exists and password matches
-     *
-     * @param string $email
-     * @param string $password
-     * @return bool
-     */
-    public function authenticate(string $email, string $password): bool
-    {
-        $user = static::where('email', $email)->first();
-        return $user && \Hash::check($password, $user->password);
+        return $this->hasMany(Order::class);
     }
 }
