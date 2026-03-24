@@ -5,7 +5,9 @@ use App\Http\Controllers\Admin\AdminMaterialController;
 use App\Http\Controllers\Admin\AdminUserController;
 use App\Http\Controllers\Client\CollectionController;
 use App\Http\Controllers\Client\MaterialController;
+use App\Http\Controllers\Client\OrderController;
 use App\Http\Controllers\Client\OrderItemController;
+use App\Http\Controllers\Client\PieceController;
 use App\Http\Controllers\Client\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -20,6 +22,10 @@ Route::get('/materials', [MaterialController::class, 'index'])->name('materials.
 Route::get('/materials/{id}', [MaterialController::class, 'show'])->name('materials.show');
 Route::get('/collections', [CollectionController::class, 'index'])->name('collections.index');
 Route::get('/collections/{id}', [CollectionController::class, 'show'])->name('collections.show');
+Route::get('/pieces', [PieceController::class, 'index'])->name('pieces.index');
+Route::get('/pieces/{id}', [PieceController::class, 'show'])->name('pieces.show');
+Route::get('/orders', [OrderController::class, 'index'])->name('orders.index');
+Route::get('/orders/{id}', [OrderController::class, 'show'])->name('orders.show');
 Route::get('/orderitems', [OrderItemController::class, 'index'])->name('orderitems.index');
 Route::get('/orderitems/{id}', [OrderItemController::class, 'show'])->name('orderitems.show');
 

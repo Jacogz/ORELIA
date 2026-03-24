@@ -49,7 +49,10 @@
 
             <div class="d-flex align-items-center ms-auto">
                 <a class="nav-link" href="{{ route('materials.index') }}">Catalog</a>
-                <a class="nav-link" href="{{ route('orderitems.index') }}">Orders</a>
+                <a class="nav-link" href="{{ route('collections.index') }}">Collections</a>
+                <a class="nav-link" href="{{ route('pieces.index') }}">Pieces</a>
+                <a class="nav-link" href="{{ route('orders.index') }}">Orders</a>
+                <a class="nav-link" href="{{ route('orderitems.index') }}">Order Items</a>
 
                 @auth
                     @if(Auth::user()->get_role() === 'admin')
