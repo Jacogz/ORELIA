@@ -1,11 +1,11 @@
 @extends('layouts.app')
 
-@section('title', $viewData['title'])
+@section('title', $view_data['title'])
 
 @section('content')
 <div class="container mt-4">
-  <h1>{{ $viewData['title'] }}</h1>
-  <p>Welcome, {{ $viewData['admin_name'] }}</p>
+  <h1>{{ $view_data['title'] }}</h1>
+  <p>Welcome, {{ $view_data['admin_name'] }}</p>
 
   <div class="row mt-4">
     <div class="col-md-3">
