@@ -20,12 +20,11 @@ class MaterialController extends Controller
      */
     public function index(): View
     {
-        $viewData = [
-            'title' => 'Materials List',
-            'materials' => Material::all(), // Fetch all materials
-        ];
-
-        return view('material.index', ['viewData' => $viewData]);
+        $view_data = [
+    'title' => 'Materials List',
+    'materials' => Material::all(),
+];
+    return view('material.index', ['viewData' => $view_data]);
     }
 
     /**
@@ -33,11 +32,8 @@ class MaterialController extends Controller
      */
     public function create(): View
     {
-        $viewData = [
-            'title' => 'Create Material',
-        ];
-
-    return view('material.create', ['viewData' => $viewData]);
+        $view_data = ['title' => 'Create Material'];
+return view('material.create', ['viewData' => $view_data]);
     }
 
     /**
@@ -46,7 +42,7 @@ class MaterialController extends Controller
     public function store(Request $request): RedirectResponse
     {
         // Validate input
-        $validated = $request->validate([
+        $validation_data = $request->validate([
             'name'        => 'required|string|max:255',
             'type'        => 'required|string|max:255',
             'description' => 'required|string',
@@ -55,10 +51,9 @@ class MaterialController extends Controller
 
         try {
             // Create new material
-            Material::create($validated);
+            Material::create($validation_data);
 
-            Log::info('Material created', ['name' => $validated['name']]);
-
+            Log::info('Material created', ['name' => $validation_data['name']]);
             return redirect()->route('materials.index')
                              ->with('success', 'Material created successfully!');
         } catch (\Exception $e) {
@@ -77,12 +72,8 @@ class MaterialController extends Controller
         try {
             $material = Material::findOrFail($id);
 
-            $viewData = [
-                'title' => 'Material Details',
-                'material' => $material,
-            ];
-
-            return view('material.show', ['viewData' => $viewData]);
+            $view_data = ['title' => 'Material Details', 'material' => $material];
+return view('material.show', ['viewData' => $view_data]);
         } catch (\Exception $e) {
             Log::warning('Material not found', ['id' => $id]);
 
