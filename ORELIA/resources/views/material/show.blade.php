@@ -40,18 +40,17 @@
         <div class="row mb-3">
           <div class="col-md-6">
             <label class="form-label fw-bold">Created:</label>
-            <p class="text-muted">{{ $viewData['material']->created_at }}</p>
+            <p class="text-muted">{{ $viewData['material']->get_created_at() }}</p>
           </div>
           <div class="col-md-6">
             <label class="form-label fw-bold">Updated:</label>
-            <p class="text-muted">{{ $viewData['material']->updated_at }}</p>
+            <p class="text-muted">{{ $viewData['material']->get_updated_at() }}</p>
           </div>
         </div>
 
         <div class="d-flex gap-2">
-          <a href="{{ route('material.list') }}" class="btn btn-secondary">Back</a>
-          <form method="POST" action="{{ route('material.destroy', $viewData['material']->get_id()) }}" style="display:inline;">
-            @csrf
+          <a href="{{ route('materials.index') }}" class="btn btn-secondary">Back</a>
+          <form method="POST" action="{{ route('materials.destroy', $viewData['material']->get_id()) }}"            @csrf
             @method('DELETE')
             <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure?')">Delete</button>
           </form>

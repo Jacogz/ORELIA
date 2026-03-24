@@ -10,7 +10,7 @@
         <h3 class="mb-0">Create Material</h3>
       </div>
       <div class="card-body">
-        <form action="{{ route('materials.save') }}" method="POST">
+        <form action="{{ route('materials.store') }}" method="POST">
           @csrf
 
           <div class="mb-3">

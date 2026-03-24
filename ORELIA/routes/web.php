@@ -18,7 +18,7 @@ Route::get('/', [MaterialController::class, 'index'])->name('home.index');
     Route::prefix('materials')->group(function () {
     Route::get('/', [MaterialController::class, 'index'])->name('materials.index');       
     Route::get('/create', [MaterialController::class, 'create'])->name('materials.create'); 
-    Route::post('/store', [MaterialController::class, 'store'])->name('materials.save');    
+    Route::post('/', [MaterialController::class, 'store'])->name('materials.store');  
     Route::get('/{id}', [MaterialController::class, 'show'])->name('materials.show');       
     Route::delete('/{id}', [MaterialController::class, 'destroy'])->name('materials.destroy'); 
 });

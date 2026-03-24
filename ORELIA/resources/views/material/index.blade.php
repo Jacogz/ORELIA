@@ -23,21 +23,21 @@
       <tbody>
         @foreach($viewData['materials'] as $material)
         <tr>
-          <td>{{ $material->id }}</td>
-          <td>{{ $material->name }}</td>
-          <td>{{ $material->type }}</td>
-          <td>{{ $material->description }}</td>
-          <td>{{ $material->color }}</td>
+          <td>{{ $material->get_id() }}</td>
+          <td>{{ $material->get_name() }}</td>
+          <td>{{ $material->get_type() }}</td>
+          <td>{{ $material->get_description() }}</td>
+          <td>{{ $material->get_color() }}</td>
+
           <td>
-            <a href="{{ route('materials.show', $material->id) }}" class="btn btn-info btn-sm">View</a>
-            <form action="{{ route('materials.destroy', $material->id) }}" method="POST" style="display:inline;">
+            <a href="{{ route('materials.show', $material->get_id()) }}" class="btn btn-info btn-sm">View</a>
+            <form action="{{ route('materials.destroy', $material->get_id()) }}" method="POST" style="display:inline;">
               @csrf
               @method('DELETE')
               <button type="submit" class="btn btn-danger btn-sm"
                 onclick="return confirm('Are you sure?')">Delete</button>
             </form>
-          </td>
-        </tr>
+          <tr>
         @endforeach
       </tbody>
     </table>

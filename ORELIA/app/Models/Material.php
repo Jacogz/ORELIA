@@ -3,7 +3,7 @@
  * Author: Isabella Hernandez Posada
  * File: Material.php
  * Description: Material model with getters/setters
- * Created: 2025-03-22
+ * Created: 2026-03-22
  */
 
 namespace App\Models;
@@ -79,6 +79,27 @@ class Material extends Model
     {
         return $this->attributes['color'];
     }
+
+    /**
+     * Get the creation date
+     *
+     * @return string
+     */
+    public function get_created_at(): string
+    {
+        return $this->attributes['created_at'];
+    }
+
+    /**
+     * Get the last update date
+     *
+     * @return string
+     */
+    public function get_updated_at(): string
+    {
+        return $this->attributes['updated_at'];
+    }
+
 
     /**
      * Set the material name
