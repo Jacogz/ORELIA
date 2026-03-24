@@ -1,14 +1,14 @@
 @extends('layouts.app')
 
-@section('title', $viewData['title'])
+@section('title', $view_data['title'])
 
 @section('content')
 <div class="container mt-4">
-  <h1>{{ $viewData['title'] }}</h1>
+  <h1>{{ $view_data['title'] }}</h1>
 
   <a href="{{ route('collections.create') }}" class="btn btn-primary mb-3">Create Collection</a>
 
-  @if($viewData['collections']->count() > 0)
+  @if($view_data['collections']->count() > 0)
     <table class="table table-striped">
       <thead>
         <tr>
@@ -19,7 +19,7 @@
         </tr>
       </thead>
       <tbody>
-        @foreach($viewData['collections'] as $collection)
+        @foreach($view_data['collections'] as $collection)
           <tr>
             <td>{{ $collection->get_id() }}</td>
             <td>{{ $collection->get_name() }}</td>

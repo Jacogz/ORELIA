@@ -23,9 +23,9 @@ class OrderItemController extends Controller
      */
     public function create(): View
     {
-        $viewData = [];
-        $viewData['title'] = 'Create Order Item';
-        return view('orderitem.create')->with('viewData', $viewData);
+        $view_data = [];
+        $view_data['title'] = 'Create Order Item';
+        return view('orderitem.create')->with('view_data', $view_data);
     }
 
     /**
@@ -57,6 +57,7 @@ class OrderItemController extends Controller
 
             return redirect()->route('orderitems.index')
                            ->with('success', 'Order item created successfully');
+
         } catch (\Exception $e) {
             Log::error('Order item creation failed', ['error' => $e->getMessage()]);
 
@@ -73,15 +74,16 @@ class OrderItemController extends Controller
     public function index(): View
     {
         try {
-            $viewData = [];
-            $viewData['title'] = 'Order Items List';
-            $viewData['orderitems'] = OrderItem::all();
+            $view_data = [];
+            $view_data['title'] = 'Order Items List';
+            $view_data['orderitems'] = OrderItem::all();
 
-            return view('orderitem.index')->with('viewData', $viewData);
+            return view('orderitem.index')->with('view_data', $view_data);
+
         } catch (\Exception $e) {
             Log::error('Order items list retrieval failed', ['error' => $e->getMessage()]);
 
-            return view('orderitem.index')->with('viewData', [
+            return view('orderitem.index')->with('view_data', [
                 'title' => 'Order Items List',
                 'orderitems' => [],
             ]);
@@ -97,11 +99,12 @@ class OrderItemController extends Controller
     public function show(string $id): View|RedirectResponse
     {
         try {
-            $viewData = [];
-            $viewData['title'] = 'Order Item Details';
-            $viewData['orderitem'] = OrderItem::findOrFail($id);
+            $view_data = [];
+            $view_data['title'] = 'Order Item Details';
+            $view_data['orderitem'] = OrderItem::findOrFail($id);
 
-            return view('orderitem.show')->with('viewData', $viewData);
+            return view('orderitem.show')->with('view_data', $view_data);
+
         } catch (\Exception $e) {
             Log::warning('Order item not found', ['id' => $id]);
 
@@ -125,6 +128,7 @@ class OrderItemController extends Controller
 
             return redirect()->route('orderitems.index')
                            ->with('success', 'Order item deleted successfully');
+                           
         } catch (\Exception $e) {
             Log::error('Order item deletion failed', ['id' => $id, 'error' => $e->getMessage()]);
 

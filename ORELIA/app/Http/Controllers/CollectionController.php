@@ -25,7 +25,7 @@ class CollectionController extends Controller
             'collections' => Collection::all(),
         ];
 
-        return view('collections.index', ['viewData' => $view_data]);
+        return view('collections.index', ['view_data' => $view_data]);
     }
 
     /**
@@ -41,7 +41,8 @@ class CollectionController extends Controller
                 'collection' => $collection,
             ];
 
-            return view('collections.show', ['viewData' => $view_data]);
+            return view('collections.show', ['view_data' => $view_data]);
+            
         } catch (\Exception $e) {
             Log::warning('Collection not found', ['id' => $id]);
 

@@ -20,12 +20,12 @@ class MaterialController extends Controller
      */
     public function index(): View
     {
-        $viewData = [
+        $view_data = [
             'title' => 'Materials List',
             'materials' => Material::all(), // Fetch all materials
         ];
 
-        return view('material.index', ['viewData' => $viewData]);
+        return view('material.index', ['view_data' => $view_data]);
     }
 
     /**
@@ -33,11 +33,11 @@ class MaterialController extends Controller
      */
     public function create(): View
     {
-        $viewData = [
+        $view_data = [
             'title' => 'Create Material',
         ];
 
-    return view('material.create', ['viewData' => $viewData]);
+    return view('material.create', ['view_data' => $view_data]);
     }
 
     /**
@@ -77,12 +77,12 @@ class MaterialController extends Controller
         try {
             $material = Material::findOrFail($id);
 
-            $viewData = [
+            $view_data = [
                 'title' => 'Material Details',
                 'material' => $material,
             ];
 
-            return view('material.show', ['viewData' => $viewData]);
+            return view('material.show', ['view_data' => $view_data]);
         } catch (\Exception $e) {
             Log::warning('Material not found', ['id' => $id]);
 
@@ -103,6 +103,7 @@ class MaterialController extends Controller
 
             return redirect()->route('materials.index')
                              ->with('success', 'Material deleted successfully!');
+
         } catch (\Exception $e) {
             Log::error('Material deletion failed', ['id' => $id, 'error' => $e->getMessage()]);
 

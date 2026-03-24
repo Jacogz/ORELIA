@@ -23,7 +23,7 @@ class AdminMaterialController extends Controller
             'materials' => Material::all(),
         ];
 
-        return view('admin.material.index', ['viewData' => $view_data]);
+        return view('admin.material.index', ['view_data' => $view_data]);
     }
 
     public function create(): View
@@ -32,7 +32,7 @@ class AdminMaterialController extends Controller
             'title' => 'Admin Create Material',
         ];
 
-        return view('admin.material.create', ['viewData' => $view_data]);
+        return view('admin.material.create', ['view_data' => $view_data]);
     }
 
     public function store(Request $request): RedirectResponse
@@ -67,7 +67,7 @@ class AdminMaterialController extends Controller
                 'material' => $material,
             ];
 
-            return view('admin.material.show', ['viewData' => $view_data]);
+            return view('admin.material.show', ['view_data' => $view_data]);
         } catch (\Exception $e) {
             Log::warning('Admin material not found', ['id' => $id]);
 
@@ -85,7 +85,7 @@ class AdminMaterialController extends Controller
                 'material' => $material,
             ];
 
-            return view('admin.material.edit', ['viewData' => $view_data]);
+            return view('admin.material.edit', ['view_data' => $view_data]);
         } catch (\Exception $e) {
             Log::warning('Admin material edit target not found', ['id' => $id]);
 

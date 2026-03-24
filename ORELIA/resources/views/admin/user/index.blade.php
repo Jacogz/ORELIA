@@ -1,14 +1,14 @@
 @extends('layouts.app')
 
-@section('title', $viewData['title'])
+@section('title', $view_data['title'])
 
 @section('content')
 <div class="container mt-4">
-  <h1>{{ $viewData['title'] }}</h1>
+  <h1>{{ $view_data['title'] }}</h1>
 
   <a href="{{ route('admin.users.create') }}" class="btn btn-primary mb-3">Create User</a>
 
-  @if($viewData['users']->count() > 0)
+  @if($view_data['users']->count() > 0)
     <table class="table table-striped">
       <thead>
         <tr>
@@ -20,7 +20,7 @@
         </tr>
       </thead>
       <tbody>
-        @foreach($viewData['users'] as $user)
+        @foreach($view_data['users'] as $user)
           <tr>
             <td>{{ $user->get_id() }}</td>
             <td>{{ $user->get_name() }} {{ $user->get_last_name() }}</td>

@@ -25,7 +25,7 @@ class AdminUserController extends Controller
             'users' => User::all(),
         ];
 
-        return view('admin.user.index', ['viewData' => $view_data]);
+        return view('admin.user.index', ['view_data' => $view_data]);
     }
 
     public function create(): View
@@ -34,7 +34,7 @@ class AdminUserController extends Controller
             'title' => 'Admin Create User',
         ];
 
-        return view('admin.user.create', ['viewData' => $view_data]);
+        return view('admin.user.create', ['view_data' => $view_data]);
     }
 
     public function store(Request $request): RedirectResponse
@@ -55,6 +55,7 @@ class AdminUserController extends Controller
             Log::info('Admin created user', ['user_id' => $user->get_id()]);
 
             return redirect()->route('admin.users.index')->with('success', 'User created successfully.');
+
         } catch (\Exception $e) {
             Log::error('Admin user creation failed', ['error' => $e->getMessage()]);
 
@@ -72,7 +73,8 @@ class AdminUserController extends Controller
                 'user' => $user,
             ];
 
-            return view('admin.user.show', ['viewData' => $view_data]);
+            return view('admin.user.show', ['view_data' => $view_data]);
+
         } catch (\Exception $e) {
             Log::warning('Admin user not found', ['id' => $id]);
 
@@ -90,7 +92,8 @@ class AdminUserController extends Controller
                 'user' => $user,
             ];
 
-            return view('admin.user.edit', ['viewData' => $view_data]);
+            return view('admin.user.edit', ['view_data' => $view_data]);
+
         } catch (\Exception $e) {
             Log::warning('Admin user edit target not found', ['id' => $id]);
 
@@ -123,6 +126,7 @@ class AdminUserController extends Controller
             Log::info('Admin updated user', ['user_id' => $id]);
 
             return redirect()->route('admin.users.show', $id)->with('success', 'User updated successfully.');
+
         } catch (\Exception $e) {
             Log::error('Admin user update failed', ['id' => $id, 'error' => $e->getMessage()]);
 
@@ -139,6 +143,7 @@ class AdminUserController extends Controller
             Log::info('Admin deleted user', ['user_id' => $id]);
 
             return redirect()->route('admin.users.index')->with('success', 'User deleted successfully.');
+            
         } catch (\Exception $e) {
             Log::error('Admin user deletion failed', ['id' => $id, 'error' => $e->getMessage()]);
 

@@ -23,8 +23,8 @@ class UserController extends Controller
      */
     public function login(): View
     {
-        // Se envía $viewData['title'] para que el Blade login.blade.php funcione correctamente
-        return view('auth.login', ['viewData' => ['title' => 'Login']]);
+        // Se envía $view_data['title'] para que el Blade login.blade.php funcione correctamente
+        return view('auth.login', ['view_data' => ['title' => 'Login']]);
     }
 
     /**
@@ -74,7 +74,7 @@ class UserController extends Controller
      */
     public function create(): View
     {
-        return view('user.create', ['viewData' => ['title' => 'Create User']]);
+        return view('user.create', ['view_data' => ['title' => 'Create User']]);
     }
 
     /**
@@ -118,7 +118,7 @@ class UserController extends Controller
             'users' => User::all(),
         ];
 
-        return view('user.index', ['viewData' => $view_data]);
+        return view('user.index', ['view_data' => $view_data]);
     }
 
     /**
@@ -132,7 +132,7 @@ class UserController extends Controller
                 'user'  => User::findOrFail($id),
             ];
 
-            return view('user.show', ['viewData' => $view_data]);
+            return view('user.show', ['view_data' => $view_data]);
 
         } catch (ModelNotFoundException $e) {
             Log::warning('User not found', ['id' => $id]);
