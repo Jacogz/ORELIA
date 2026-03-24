@@ -9,6 +9,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Material extends Model
 {
@@ -122,5 +123,15 @@ class Material extends Model
     public function set_color(string $color): void
     {
         $this->attributes['color'] = $color;
+    }
+
+    /**
+     * Get the pieces associated with this material
+     *
+     * @return BelongsToMany
+     */
+    public function pieces(): BelongsToMany
+    {
+        return $this->belongsToMany('App\\Models\\Piece', 'material_piece', 'material_id', 'piece_id');
     }
 }
