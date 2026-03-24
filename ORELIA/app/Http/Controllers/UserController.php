@@ -52,7 +52,7 @@ class UserController extends Controller
             return redirect()->route('admin.index');
         }
 
-        return redirect()->route('home.index');
+        return redirect()->route('home.index'); 
     }
 
     /**

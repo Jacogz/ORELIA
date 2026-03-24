@@ -6,8 +6,6 @@
 <div class="container mt-4">
   <h1>{{ $viewData['title'] }}</h1>
 
-  <a href="{{ route('orderitems.create') }}" class="btn btn-primary mb-3">Create Order Item</a>
-
   <table class="table table-striped">
     <thead>
       <tr>
@@ -17,7 +15,7 @@
         <th>Subtotal</th>
         <th>Order ID</th>
         <th>Piece ID</th>
-        <th>Actions</th>
+        <th>Action</th>
       </tr>
     </thead>
     <tbody>
@@ -31,11 +29,6 @@
           <td>{{ $orderitem->get_piece_id() }}</td>
           <td>
             <a href="{{ route('orderitems.show', $orderitem->get_id()) }}" class="btn btn-info btn-sm">View</a>
-            <form action="{{ route('orderitems.destroy', $orderitem->get_id()) }}" method="POST" style="display:inline;">
-              @csrf
-              @method('DELETE')
-              <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure?')">Delete</button>
-            </form>
           </td>
         </tr>
       @endforeach
