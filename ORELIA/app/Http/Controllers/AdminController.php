@@ -22,6 +22,6 @@ class AdminController extends Controller
             'admin_name' => Auth::user()->get_name(),
         ];
 
-        return view('admin.index', $view_data);
+        return view('admin.index', ['view_data' => $view_data]);
     }
 }

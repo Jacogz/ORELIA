@@ -1,10 +1,10 @@
 @extends('layouts.app')
 
-@section('title', $viewData['title'])
+@section('title', $view_data['title'])
 
 @section('content')
 <div class="container mt-4">
-  <h1>{{ $viewData['title'] }}</h1>
+  <h1>{{ $view_data['title'] }}</h1>
 
   @if($errors->any())
     <div class="alert alert-danger">

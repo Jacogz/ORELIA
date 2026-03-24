@@ -1,10 +1,10 @@
 @extends('layouts.app')
 
-@section('title', $viewData['title'])
+@section('title', $view_data['title'])
 
 @section('content')
 <div class="container mt-4">
-  <h1>{{ $viewData['title'] }}</h1>
+  <h1>{{ $view_data['title'] }}</h1>
 
   <a href="{{ route('orderitems.create') }}" class="btn btn-primary mb-3">Create Order Item</a>
 
@@ -21,7 +21,7 @@
       </tr>
     </thead>
     <tbody>
-      @foreach($viewData['orderitems'] as $orderitem)
+      @foreach($view_data['orderitems'] as $orderitem)
         <tr>
           <td>{{ $orderitem->get_id() }}</td>
           <td>{{ $orderitem->get_unit_price() }}</td>

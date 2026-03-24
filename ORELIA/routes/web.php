@@ -15,13 +15,13 @@ Route::post('/logout', [UserController::class, 'logout'])->name('login.logout');
 Route::get('/', [MaterialController::class, 'index'])->name('home.index');
 
 // MATERIALS CRUD
-    Route::prefix('materials')->group(function () {
-    Route::get('/', [MaterialController::class, 'index'])->name('materials.index');       
-    Route::get('/create', [MaterialController::class, 'create'])->name('materials.create'); 
-    Route::post('/store', [MaterialController::class, 'store'])->name('materials.save');    
-    Route::get('/{id}', [MaterialController::class, 'show'])->name('materials.show');       
-    Route::delete('/{id}', [MaterialController::class, 'destroy'])->name('materials.destroy'); 
-});
+Route::get('/materials',             [MaterialController::class, 'index'])->name('materials.index');
+Route::get('/materials/create',      [MaterialController::class, 'create'])->name('materials.create');
+Route::post('/materials',            [MaterialController::class, 'store'])->name('materials.store');
+Route::get('/materials/{id}',        [MaterialController::class, 'show'])->name('materials.show');
+Route::get('/materials/{id}/edit',   [MaterialController::class, 'edit'])->name('materials.edit');    
+Route::put('/materials/{id}',        [MaterialController::class, 'update'])->name('materials.update'); 
+Route::delete('/materials/{id}',     [MaterialController::class, 'destroy'])->name('materials.destroy');
 
 // USERS CRUD
 Route::get('/users',        [UserController::class, 'index'])->name('users.index');
