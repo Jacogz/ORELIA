@@ -16,8 +16,8 @@ return new class extends Migration
             $table->integer('unit_price');
             $table->integer('quantity');
             $table->integer('subtotal');
-            $table->integer('order_id');
-            $table->integer('piece_id');
+            $table->foreignId('order_id')->constrained('orders')->cascadeOnDelete();
+            $table->foreignId('piece_id')->constrained('pieces')->cascadeOnDelete();
             // Foreign keys will be added in Jewelry project
             // when Order and Piece tables exist
             $table->timestamps();

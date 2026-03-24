@@ -3,32 +3,33 @@
 @section('title', 'Login')
 
 @section('content')
-<div style="max-width: 400px; margin: 80px auto;">
-    <h1>Login</h1>
+<div class="row justify-content-center mt-5">
+  <div class="col-md-5">
+    <div class="card">
+      <div class="card-header">
+        <h4 class="mb-0">Login</h4>
+      </div>
+      <div class="card-body">
+        <form method="POST" action="{{ route('login.authenticate') }}">
+          @csrf
 
-    @if ($errors->any())
-        <div style="color: red; margin-bottom: 16px;">
-            {{ $errors->first() }}
-        </div>
-    @endif
-
-    <form method="POST" action="{{ route('login.authenticate') }}">
-        @csrf
-
-        <div style="margin-bottom: 16px;">
-            <label for="email">Correo electrónico</label><br>
+          <div class="mb-3">
+            <label for="email" class="form-label">Email</label>
             <input type="email" id="email" name="email"
-                   value="{{ old('email') }}"
-                   style="width: 100%; padding: 8px;" required>
-        </div>
+                   class="form-control"
+                   value="{{ old('email') }}" required>
+          </div>
 
-        <div style="margin-bottom: 16px;">
-            <label for="password">Contraseña</label><br>
+          <div class="mb-3">
+            <label for="password" class="form-label">Password</label>
             <input type="password" id="password" name="password"
-                   style="width: 100%; padding: 8px;" required>
-        </div>
+                   class="form-control" required>
+          </div>
 
-        <button type="submit" style="padding: 10px 24px;">Entrar</button>
-    </form>
+          <button type="submit" class="btn btn-primary w-100">Log In</button>
+        </form>
+      </div>
+    </div>
+  </div>
 </div>
 @endsection

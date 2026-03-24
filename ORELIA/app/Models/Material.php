@@ -9,6 +9,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Piece;
 
 class Material extends Model
 {
@@ -140,8 +141,25 @@ class Material extends Model
      * @param string $color
      * @return void
      */
+    /**
+     * Set the material color
+     *
+     * @param string $color
+     * @return void
+     */
     public function set_color(string $color): void
     {
         $this->attributes['color'] = $color;
+    }
+
+    /**
+     * Get all pieces that use this material
+     * Many materials belong to many pieces
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function pieces(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
+    {
+        return $this->belongsToMany(Piece::class, 'material_piece');
     }
 }

@@ -21,10 +21,11 @@ class MaterialController extends Controller
     public function index(): View
     {
         $view_data = [
-    'title' => 'Materials List',
-    'materials' => Material::all(),
-];
-    return view('material.index', ['viewData' => $view_data]);
+            'title'     => 'Materials List',
+            'materials' => Material::all(),
+        ];
+
+        return view('material.index', ['viewData' => $view_data]);
     }
 
     /**
@@ -33,7 +34,8 @@ class MaterialController extends Controller
     public function create(): View
     {
         $view_data = ['title' => 'Create Material'];
-return view('material.create', ['viewData' => $view_data]);
+
+        return view('material.create', ['viewData' => $view_data]);
     }
 
     /**
@@ -41,7 +43,6 @@ return view('material.create', ['viewData' => $view_data]);
      */
     public function store(Request $request): RedirectResponse
     {
-        // Validate input
         $validation_data = $request->validate([
             'name'        => 'required|string|max:255',
             'type'        => 'required|string|max:255',
@@ -50,17 +51,17 @@ return view('material.create', ['viewData' => $view_data]);
         ]);
 
         try {
-            // Create new material
             Material::create($validation_data);
 
             Log::info('Material created', ['name' => $validation_data['name']]);
+
             return redirect()->route('materials.index')
-                             ->with('success', 'Material created successfully!');
+                ->with('success', 'Material created successfully!');
         } catch (\Exception $e) {
             Log::error('Material creation failed', ['error' => $e->getMessage()]);
 
             return redirect()->route('materials.create')
-                             ->withErrors(['error' => 'Material could not be created.']);
+                ->withErrors(['error' => 'Material could not be created.']);
         }
     }
 
@@ -70,15 +71,69 @@ return view('material.create', ['viewData' => $view_data]);
     public function show(string $id): View|RedirectResponse
     {
         try {
-            $material = Material::findOrFail($id);
+            $view_data = [
+                'title'    => 'Material Details',
+                'material' => Material::findOrFail($id),
+            ];
 
-            $view_data = ['title' => 'Material Details', 'material' => $material];
-return view('material.show', ['viewData' => $view_data]);
+            return view('material.show', ['viewData' => $view_data]);
         } catch (\Exception $e) {
             Log::warning('Material not found', ['id' => $id]);
 
             return redirect()->route('materials.index')
-                             ->withErrors(['error' => 'Material not found.']);
+                ->withErrors(['error' => 'Material not found.']);
+        }
+    }
+
+    /**
+     * Show the edit material form
+     */
+    public function edit(string $id): View|RedirectResponse
+    {
+        try {
+            $view_data = [
+                'title'    => 'Edit Material',
+                'material' => Material::findOrFail($id),
+            ];
+
+            return view('material.edit', ['viewData' => $view_data]);
+        } catch (\Exception $e) {
+            Log::warning('Material not found for edit', ['id' => $id]);
+
+            return redirect()->route('materials.index')
+                ->withErrors(['error' => 'Material not found.']);
+        }
+    }
+
+    /**
+     * Update an existing material
+     */
+    public function update(Request $request, string $id): RedirectResponse
+    {
+        $validation_data = $request->validate([
+            'name'        => 'required|string|max:255',
+            'type'        => 'required|string|max:255',
+            'description' => 'required|string',
+            'color'       => 'required|string|max:50',
+        ]);
+
+        try {
+            $material = Material::findOrFail($id);
+            $material->set_name($validation_data['name']);
+            $material->set_type($validation_data['type']);
+            $material->set_description($validation_data['description']);
+            $material->set_color($validation_data['color']);
+            $material->save();
+
+            Log::info('Material updated', ['id' => $id]);
+
+            return redirect()->route('materials.show', $id)
+                ->with('success', 'Material updated successfully!');
+        } catch (\Exception $e) {
+            Log::error('Material update failed', ['id' => $id, 'error' => $e->getMessage()]);
+
+            return redirect()->route('materials.edit', $id)
+                ->withErrors(['error' => 'Material could not be updated.']);
         }
     }
 
@@ -93,12 +148,12 @@ return view('material.show', ['viewData' => $view_data]);
             Log::info('Material deleted', ['id' => $id]);
 
             return redirect()->route('materials.index')
-                             ->with('success', 'Material deleted successfully!');
+                ->with('success', 'Material deleted successfully!');
         } catch (\Exception $e) {
             Log::error('Material deletion failed', ['id' => $id, 'error' => $e->getMessage()]);
 
             return redirect()->route('materials.index')
-                             ->withErrors(['error' => 'Material could not be deleted.']);
+                ->withErrors(['error' => 'Material could not be deleted.']);
         }
     }
 }

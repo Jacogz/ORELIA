@@ -46,8 +46,8 @@
         .btn-secondary:hover { background: #7a7470; color: white; }
         .btn-danger { background: var(--rosa-oscuro); color: white; }
         .btn-danger:hover { background: #c9a0a0; color: white; }
-        .btn-info { background: var(--secondary-oro); color: white; }
-        .btn-info:hover { background: #c9a878; color: white; }
+        .btn-warning { background: #F5E6A3; color: var(--text-taupe); }
+.btn-warning:hover { background: #EDD96B; color: var(--text-taupe); }
 
         /* Tables */
         .table { border-collapse: collapse; background: white; }
@@ -87,10 +87,10 @@
                 <a class="nav-link" href="{{ route('orderitems.index') }}">Order Items</a>
 
                 @auth
-                    <span class="me-3">Hola, {{ Auth::user()->get_name() }}</span>
+                    <span class="me-3">Hello, {{ Auth::user()->get_name() }}</span>
                     <form action="{{ route('login.logout') }}" method="POST" class="mb-0">
                         @csrf
-                        <button type="submit" class="btn btn-secondary btn-sm">Cerrar Sesión</button>
+                        <button type="submit" class="btn btn-secondary btn-sm">Log Out</button>
                     </form>
                 @endauth
 
