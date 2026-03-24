@@ -1,12 +1,12 @@
 <?php
 
-use App\Http\Controllers\AdminController;
-use App\Http\Controllers\AdminMaterialController;
-use App\Http\Controllers\AdminUserController;
-use App\Http\Controllers\CollectionController;
-use App\Http\Controllers\MaterialController;
-use App\Http\Controllers\OrderItemController;
-use App\Http\Controllers\UserController;
+use App\Http\Controllers\Admin\AdminController;
+use App\Http\Controllers\Admin\AdminMaterialController;
+use App\Http\Controllers\Admin\AdminUserController;
+use App\Http\Controllers\Client\CollectionController;
+use App\Http\Controllers\Client\MaterialController;
+use App\Http\Controllers\Client\OrderItemController;
+use App\Http\Controllers\Client\UserController;
 use Illuminate\Support\Facades\Route;
 
 // Authentication

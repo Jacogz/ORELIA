@@ -8,6 +8,7 @@
 
 namespace App\Http\Middleware;
 
+use App\Models\User;
 use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -17,8 +18,10 @@ class AdminMiddleware
 {
     public function handle(Request $request, Closure $next): Response
     {
+        $current_user = Auth::user();
+
         // Redirect to login if not authenticated or not an admin
-        if (!Auth::check() || Auth::user()->get_role() !== 'admin') {
+        if (!Auth::check() || !($current_user instanceof User) || $current_user->get_role() !== 'admin') {
             return redirect()->route('login.index');
         }
 

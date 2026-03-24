@@ -5,7 +5,9 @@
  * Description: Admin panel controller — dashboard and admin-only views
  */
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
+
+use App\Http\Controllers\Controller;
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;

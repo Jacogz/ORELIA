@@ -5,7 +5,9 @@
  * Description: Handles CRUD operations for Materials
  */
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Client;
+
+use App\Http\Controllers\Controller;
 
 use App\Models\Material;
 use Illuminate\Http\Request;

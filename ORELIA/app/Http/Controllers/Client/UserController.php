@@ -5,7 +5,9 @@
  * Description: Handles user authentication and CRUD operations
  */
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Client;
+
+use App\Http\Controllers\Controller;
 
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -48,7 +50,9 @@ class UserController extends Controller
 
         Log::info('User logged in', ['user_id' => Auth::id()]);
 
-        if (Auth::user()->get_role() === 'admin') {
+        $current_user = Auth::user();
+
+        if ($current_user instanceof User && $current_user->get_role() === 'admin') {
             return redirect()->route('admin.index');
         }
 

@@ -6,7 +6,9 @@
  * Created: 2025-03-22
  */
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Client;
+
+use App\Http\Controllers\Controller;
 
 use App\Models\OrderItem;
 use Illuminate\Http\Request;
