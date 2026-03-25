@@ -33,4 +33,7 @@ return [
     'weight' => 'Weight',
     'collection_id' => 'Collection ID',
     'image_url' => 'Image URL',
+    'select_role' => 'Select Role',
+    'client' => 'Client',
+    'admin' => 'Admin',
 ];
