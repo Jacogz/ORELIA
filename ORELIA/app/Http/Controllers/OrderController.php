@@ -1,6 +1,6 @@
 <?php
 /*
- * Author: GitHub Copilot
+ * Author: Jeremias Figueroa Garcia
  * File: OrderController.php
  * Description: Final-user read-only controller for orders
  * Created: 2026-03-24

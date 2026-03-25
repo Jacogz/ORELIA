@@ -6,18 +6,18 @@
 <div class="container mt-4">
     <h1>{{ $view_data['title'] }}</h1>
 
-    <a href="{{ route('admin.users.create') }}" class="btn btn-primary mb-3">Create User</a>
+    <a href="{{ route('admin.users.create') }}" class="btn btn-primary mb-3">{{ __('users.create_user') }}</a>
 
     @if($view_data['users']->count() > 0)
         <table class="table table-striped">
             <thead>
                 <tr>
-                    <th>ID</th>
-                    <th>Name</th>
-                    <th>Last Name</th>
-                    <th>Email</th>
-                    <th>Role</th>
-                    <th>Actions</th>
+                    <th>{{ __('forms.id') }}</th>
+                    <th>{{ __('forms.name') }}</th>
+                    <th>{{ __('forms.last_name') }}</th>
+                    <th>{{ __('forms.email') }}</th>
+                    <th>{{ __('forms.role') }}</th>
+                    <th>{{ __('materials.actions') }}</th>
                 </tr>
             </thead>
             <tbody>
@@ -29,11 +29,11 @@
                         <td>{{ $user->email }}</td>
                         <td>{{ $user->role }}</td>
                         <td>
-                            <a href="{{ route('users.show', $user->id) }}" class="btn btn-info btn-sm">View</a>
+                            <a href="{{ route('users.show', $user->id) }}" class="btn btn-info btn-sm">{{ __('actions.view') }}</a>
                             <form action="{{ route('admin.users.delete', $user->id) }}" method="POST" style="display:inline;">
                                 @csrf
                                 @method('DELETE')
-                                <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure?')">Delete</button>
+                                <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('{{ __('materials.confirm_delete') }}')">{{ __('actions.delete') }}</button>
                             </form>
                         </td>
                     </tr>
@@ -41,7 +41,7 @@
             </tbody>
         </table>
     @else
-        <div class="alert alert-info">No users found. <a href="{{ route('admin.users.create') }}">Create one</a></div>
+        <div class="alert alert-info">{{ __('users.no_users_found') }} <a href="{{ route('admin.users.create') }}">{{ __('users.create_one') }}</a></div>
     @endif
 </div>
 @endsection

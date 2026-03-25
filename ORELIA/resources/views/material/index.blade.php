@@ -10,12 +10,12 @@
     <table class="table table-striped">
       <thead>
         <tr>
-          <th>ID</th>
-          <th>Name</th>
-          <th>Type</th>
-          <th>Description</th>
-          <th>Color</th>
-          <th>Action</th>
+          <th>{{ __('forms.id') }}</th>
+          <th>{{ __('forms.name') }}</th>
+          <th>{{ __('forms.type') }}</th>
+          <th>{{ __('forms.description') }}</th>
+          <th>{{ __('forms.color') }}</th>
+          <th>{{ __('materials.action') }}</th>
         </tr>
       </thead>
       <tbody>
@@ -28,13 +28,13 @@
           <td>{{ $material->get_color() }}</td>
 
           <td>
-            <a href="{{ route('materials.show', $material->get_id()) }}" class="btn btn-info btn-sm">View</a>
+            <a href="{{ route('materials.show', $material->get_id()) }}" class="btn btn-info btn-sm">{{ __('actions.view') }}</a>
           <tr>
         @endforeach
       </tbody>
     </table>
   @else
-    <div class="alert alert-info">No materials found.</div>
+    <div class="alert alert-info">{{ __('materials.no_materials_found') }}</div>
   @endif
 </div>
 @endsection

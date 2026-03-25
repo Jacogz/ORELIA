@@ -1,6 +1,6 @@
 <?php
 /*
- * Author: GitHub Copilot
+ * Author: Jeremias Figueroa Garcia
  * File: PieceController.php
  * Description: Final-user read-only controller for pieces
  * Created: 2026-03-24

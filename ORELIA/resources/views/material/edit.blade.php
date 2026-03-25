@@ -7,7 +7,7 @@
   <div class="col-md-8">
     <div class="card shadow-sm">
       <div class="card-header">
-        <h3 class="mb-0">Edit Material</h3>
+        <h3 class="mb-0">{{ __('materials.edit_material') }}</h3>
       </div>
       <div class="card-body">
         <form action="{{ route('materials.update', $view_data['material']->get_id()) }}" method="POST">
@@ -15,7 +15,7 @@
           @method('PUT')
 
           <div class="mb-3">
-            <label for="name" class="form-label">Name</label>
+            <label for="name" class="form-label">{{ __('forms.name') }}</label>
             <input type="text" class="form-control" id="name" name="name"
                    value="{{ old('name', $view_data['material']->get_name()) }}" required>
             @error('name')
@@ -24,7 +24,7 @@
           </div>
 
           <div class="mb-3">
-            <label for="type" class="form-label">Type</label>
+            <label for="type" class="form-label">{{ __('forms.type') }}</label>
             <input type="text" class="form-control" id="type" name="type"
                    value="{{ old('type', $view_data['material']->get_type()) }}" required>
             @error('type')
@@ -33,7 +33,7 @@
           </div>
 
           <div class="mb-3">
-            <label for="description" class="form-label">Description</label>
+            <label for="description" class="form-label">{{ __('forms.description') }}</label>
             <textarea class="form-control" id="description" name="description" rows="4" required>{{ old('description', $view_data['material']->get_description()) }}</textarea>
             @error('description')
               <div class="text-danger small mt-1">{{ $message }}</div>
@@ -41,7 +41,7 @@
           </div>
 
           <div class="mb-3">
-            <label for="color" class="form-label">Color</label>
+            <label for="color" class="form-label">{{ __('forms.color') }}</label>
             <input type="text" class="form-control" id="color" name="color"
                    value="{{ old('color', $view_data['material']->get_color()) }}" required>
             @error('color')
@@ -50,8 +50,8 @@
           </div>
 
           <div class="d-flex gap-2">
-            <button type="submit" class="btn btn-primary">Update</button>
-            <a href="{{ route('materials.show', $view_data['material']->get_id()) }}" class="btn btn-secondary">Cancel</a>
+            <button type="submit" class="btn btn-primary">{{ __('actions.update') }}</button>
+            <a href="{{ route('materials.show', $view_data['material']->get_id()) }}" class="btn btn-secondary">{{ __('actions.cancel') }}</a>
           </div>
         </form>
       </div>
