@@ -1,36 +1,50 @@
 <?php
 /*
- * Author: Isabella Hernandez Posada
  * File: UserController.php
- * Description: Handles user authentication and CRUD operations
+ * Description: Handles HTTP request/response cycle for User resources and
+ *              authentication flow. CRUD operations are delegated to UserService.
+ *              Authentication (login, logout, session) is handled here directly
+ *              as these are HTTP/session concerns, not user data concerns.
  */
 
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
-
 use App\Models\User;
-use Illuminate\Http\Request;
+use App\Services\UserService;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\View\View;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\View\View;
 
 class UserController extends Controller
 {
+    private UserService $user_service;
+
+    public function __construct()
+    {
+        $this->user_service = new UserService();
+    }
+
+    // -------------------------------------------------------------------------
+    // Authentication routes (controller-owned — session/HTTP concerns)
+    // -------------------------------------------------------------------------
+
     /**
-     * Show the login form
+     * Show the login form.
      */
     public function login(): View
     {
-        // Se envía $viewData['title'] para que el Blade login.blade.php funcione correctamente
-        return view('auth.login', ['viewData' => ['title' => 'Login']]);
+        $view_data = ['title' => 'Login'];
+
+        return view('auth.login', ['view_data' => $view_data]);
     }
 
     /**
-     * Handle login submission
+     * Handle login form submission.
+     * On success, stores only the client ID in session — R13.
      */
     public function authenticate(Request $request): RedirectResponse
     {
@@ -40,9 +54,7 @@ class UserController extends Controller
         ]);
 
         if (!Auth::attempt($validation_data)) {
-            return back()->withErrors([
-                'email' => 'Invalid email or password.'
-            ]);
+            return back()->withErrors(['email' => 'Invalid email or password.']);
         }
 
         $request->session()->regenerate();
@@ -56,11 +68,11 @@ class UserController extends Controller
             return redirect()->route('admin.index');
         }
 
-        return redirect()->route('pieces.index'); 
+        return redirect()->route('pieces.index');
     }
 
     /**
-     * Logout the user
+     * Log out the current user and invalidate the session.
      */
     public function logout(Request $request): RedirectResponse
     {
@@ -73,16 +85,56 @@ class UserController extends Controller
         return redirect()->route('users.login');
     }
 
+    // -------------------------------------------------------------------------
+    // Admin CRUD routes (delegated to UserService)
+    // -------------------------------------------------------------------------
+
     /**
-     * Show form to create a new user
+     * Display all users.
      */
-    public function create(): View
+    public function index(): View
     {
-        return view('users.create', ['viewData' => ['title' => 'Create User']]);
+        $view_data = [
+            'title' => 'Users List',
+            'users' => $this->user_service->get_all_users(),
+        ];
+
+        return view('users.index', ['view_data' => $view_data]);
     }
 
     /**
-     * Store a new user
+     * Show a specific user.
+     */
+    public function show(string $id): View|RedirectResponse
+    {
+        try {
+            $view_data = [
+                'title' => 'User Details',
+                'user'  => $this->user_service->get_user_by_id((int) $id),
+            ];
+
+            return view('users.show', ['view_data' => $view_data]);
+        } catch (ModelNotFoundException $e) {
+            Log::warning('User not found', ['id' => $id]);
+
+            return redirect()->route('admin.users.index')
+                ->withErrors(['error' => 'User not found.']);
+        }
+    }
+
+    /**
+     * Show the create user form.
+     */
+    public function create(): View
+    {
+        $view_data = ['title' => 'Create User'];
+
+        return view('users.create', ['view_data' => $view_data]);
+    }
+
+    /**
+     * Validate and persist a new user.
+     * Password hashing is handled by UserService — never hash before passing.
      */
     public function store(Request $request): RedirectResponse
     {
@@ -96,14 +148,12 @@ class UserController extends Controller
         ]);
 
         try {
-            $validation_data['password'] = Hash::make($validation_data['password']);
-            $user = User::create($validation_data);
+            $user = $this->user_service->create_user($validation_data);
 
-            Log::info('User created', ['user_id' => $user->id]);
+            Log::info('User created', ['user_id' => $user->get_id()]);
 
             return redirect()->route('admin.users.index')
                 ->with('success', 'User created successfully.');
-
         } catch (\Exception $e) {
             Log::error('User creation failed', ['error' => $e->getMessage()]);
 
@@ -113,33 +163,20 @@ class UserController extends Controller
     }
 
     /**
-     * Display all users
+     * Show the edit user form.
+     * Role, email, and password are not editable through this form.
      */
-    public function index(): View
-    {
-        $view_data = [
-            'title' => 'Users List',
-            'users' => User::all(),
-        ];
-
-        return view('users.index', ['viewData' => $view_data]);
-    }
-
-    /**
-     * Show a specific user
-     */
-    public function show(string $id): View|RedirectResponse
+    public function edit(string $id): View|RedirectResponse
     {
         try {
             $view_data = [
-                'title' => 'User Details',
-                'user'  => User::findOrFail($id),
+                'title' => 'Edit User',
+                'user'  => $this->user_service->get_user_for_edit((int) $id),
             ];
 
-            return view('users.show', ['viewData' => $view_data]);
-
+            return view('users.edit', ['view_data' => $view_data]);
         } catch (ModelNotFoundException $e) {
-            Log::warning('User not found', ['id' => $id]);
+            Log::warning('User not found for editing', ['id' => $id]);
 
             return redirect()->route('admin.users.index')
                 ->withErrors(['error' => 'User not found.']);
@@ -147,23 +184,51 @@ class UserController extends Controller
     }
 
     /**
-     * Delete a user
+     * Validate and apply updates to an existing user.
+     * Only name, last_name, and address are accepted — role is immutable.
+     */
+    public function update(Request $request, string $id): RedirectResponse
+    {
+        $validation_data = $request->validate([
+            'name'      => ['required', 'string', 'max:255'],
+            'last_name' => ['required', 'string', 'max:255'],
+            'address'   => ['nullable', 'string', 'max:255'],
+        ]);
+
+        try {
+            $user = $this->user_service->update_user((int) $id, $validation_data);
+
+            Log::info('User updated', ['user_id' => $user->get_id()]);
+
+            return redirect()->route('admin.users.show', ['id' => $id])
+                ->with('success', 'User updated successfully.');
+        } catch (ModelNotFoundException $e) {
+            Log::warning('User not found for update', ['id' => $id]);
+
+            return redirect()->route('admin.users.index')
+                ->withErrors(['error' => 'User not found.']);
+        } catch (\Exception $e) {
+            Log::error('User update failed', ['id' => $id, 'error' => $e->getMessage()]);
+
+            return redirect()->route('admin.users.edit', ['id' => $id])
+                ->withErrors(['error' => 'User could not be updated.']);
+        }
+    }
+
+    /**
+     * Delete a user by ID.
      */
     public function delete(string $id): RedirectResponse
     {
         try {
-            User::findOrFail($id)->delete();
+            $this->user_service->delete_user((int) $id);
 
             Log::info('User deleted', ['user_id' => $id]);
 
             return redirect()->route('admin.users.index')
                 ->with('success', 'User deleted successfully.');
-
         } catch (\Exception $e) {
-            Log::error('User deletion failed', [
-                'id' => $id,
-                'error' => $e->getMessage()
-            ]);
+            Log::error('User deletion failed', ['id' => $id, 'error' => $e->getMessage()]);
 
             return redirect()->route('admin.users.index')
                 ->withErrors(['error' => 'User could not be deleted.']);

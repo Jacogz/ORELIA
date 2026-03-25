@@ -35,7 +35,7 @@
 
     <div class="mb-3">
       <label for="image_url" class="form-label">Image URL</label>
-      <input type="text" class="form-control @error('image_url') is-invalid @enderror" id="image_url" name="image_url" value="{{ old('image_url') }}" required>
+      <input type="text" class="form-control @error('image_url') is-invalid @enderror" id="image_url" name="image_url" value="{{ old('image_url') }}">
       @error('image_url')
         <div class="text-danger">{{ $message }}</div>
       @enderror

@@ -55,7 +55,9 @@ class Collection extends Model
      */
     public function get_creation_date(): string
     {
-        return $this->attributes['creation_date'];
+        return $this->attributes['creation_date']
+            ? \Carbon\Carbon::parse($this->attributes['creation_date'])->toDateString()
+            : '';
     }
 
     /**

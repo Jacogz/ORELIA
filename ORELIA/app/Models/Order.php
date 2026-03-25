@@ -250,25 +250,6 @@ class Order extends Model
     }
 
     /**
-     * Calculate total using loaded order items only
-     *
-     * @return int
-     */
-    public function calculate_total(): int
-    {
-        $total = 0;
-        $order_items = $this->get_order_items();
-
-        foreach ($order_items as $order_item) {
-            if ($order_item instanceof OrderItem) {
-                $total += $order_item->get_subtotal();
-            }
-        }
-
-        return $total;
-    }
-
-    /**
      * Get the client associated with this order
      *
      * @return BelongsTo

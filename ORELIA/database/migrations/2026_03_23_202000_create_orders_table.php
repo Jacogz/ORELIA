@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->integer('total');
             $table->dateTime('creation_date');
-            $table->string('status', 50);
+            $table->string('status', 50)->default('pending');
             $table->foreignId('client_id')->constrained('users')->cascadeOnDelete();
             $table->string('payment_method', 100);
             $table->string('payment_status', 50);

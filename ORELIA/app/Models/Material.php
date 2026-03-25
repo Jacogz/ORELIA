@@ -142,12 +142,6 @@ class Material extends Model
      * @param string $color
      * @return void
      */
-    /**
-     * Set the material color
-     *
-     * @param string $color
-     * @return void
-     */
     public function set_color(string $color): void
     {
         $this->attributes['color'] = $color;

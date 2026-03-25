@@ -36,19 +36,28 @@ Route::delete('/admin/materials/{id}',          [MaterialController::class, 'del
 // Public routes
 Route::get('/collections',                      [CollectionController::class, 'index'])->name('collections.index');
 Route::get('/collections/{id}',                 [CollectionController::class, 'show'])->name('collections.show');
+// Admin routes
+Route::get('/admin/collections/create',         [CollectionController::class, 'create'])->name('collections.create');
+Route::post('/admin/collections',               [CollectionController::class, 'store'])->name('collections.store');
+Route::get('/admin/collections/{id}/edit',      [CollectionController::class, 'edit'])->name('collections.edit');
+Route::put('/admin/collections/{id}',           [CollectionController::class, 'update'])->name('collections.update');
+Route::delete('/admin/collections/{id}',        [CollectionController::class, 'delete'])->name('collections.delete');
 
 // Orders --------------------------------------
 // Public routes
-Route::get('/orders', [OrderController::class, 'index'])->name('orders.index');
+Route::get('/orders',                           [OrderController::class, 'index'])->name('orders.index');
 Route::get('/orders/{id}',                      [OrderController::class, 'show'])->name('orders.show');
+Route::get('/orders/create',                    [OrderController::class, 'create'])->name('orders.create');
+Route::post('/orders',                          [OrderController::class, 'store'])->name('orders.store');
+Route::get('/orders/{id}/edit',                 [OrderController::class, 'edit'])->name('orders.edit');
+Route::put('/orders/{id}',                      [OrderController::class, 'update'])->name('orders.update');
+Route::delete('/orders/{id}',                   [OrderController::class, 'delete'])->name('orders.delete');
 
-// Oder Items -----------------------------------
+// Order Items -----------------------------------
 //Public routes
 Route::get('/orderitems',                       [OrderItemController::class, 'index'])->name('orderitems.index');
 Route::get('/orderitems/{id}',                  [OrderItemController::class, 'show'])->name('orderitems.show');
 // Admin routes
-Route::get('/admin/orderitems/create',          [OrderItemController::class, 'create'])->name('orderitems.create');
-Route::post('/admin/orderitems',                [OrderItemController::class, 'store'])->name('orderitems.store');
 Route::get('/admin/orderitems/{id}/edit',       [OrderItemController::class, 'edit'])->name('orderitems.edit');
 Route::put('/admin/orderitems/{id}',            [OrderItemController::class, 'update'])->name('orderitems.update');
 Route::delete('/admin/orderitems/{id}',         [OrderItemController::class, 'delete'])->name('orderitems.delete');
@@ -62,6 +71,8 @@ Route::post('/users/logout',                    [UserController::class, 'logout'
 Route::get('/admin/users',                      [UserController::class, 'index'])->name('admin.users.index');
 Route::get('/admin/users/create',               [UserController::class, 'create'])->name('admin.users.create');
 Route::post('/admin/users',                     [UserController::class, 'store'])->name('admin.users.store');
+Route::get('/admin/users/{id}/edit',            [UserController::class, 'edit'])->name('admin.users.edit');
+Route::put('/admin/users/{id}',                 [UserController::class, 'update'])->name('admin.users.update');
 Route::get('/admin/users/{id}',                 [UserController::class, 'show'])->name('admin.users.show');
 
 // Admin Dashboard ---------------------------------------
