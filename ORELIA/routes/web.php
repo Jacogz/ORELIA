@@ -59,10 +59,10 @@ Route::get('/users/login',                      [UserController::class, 'login']
 Route::post('/users/authenticate',              [UserController::class, 'authenticate'])->name('users.authenticate');
 Route::post('/users/logout',                    [UserController::class, 'logout'])->name('users.logout');
 // Admin routes
-Route::get('/admin/users',                      [AdminUserController::class, 'index'])->name('admin.users.index');
-Route::get('/admin/users/create',               [AdminUserController::class, 'create'])->name('admin.users.create');
-Route::post('/admin/users',                     [AdminUserController::class, 'store'])->name('admin.users.store');
-Route::get('/admin/users/{id}',                 [AdminUserController::class, 'show'])->name('admin.users.show');
+Route::get('/admin/users',                      [UserController::class, 'index'])->name('admin.users.index');
+Route::get('/admin/users/create',               [UserController::class, 'create'])->name('admin.users.create');
+Route::post('/admin/users',                     [UserController::class, 'store'])->name('admin.users.store');
+Route::get('/admin/users/{id}',                 [UserController::class, 'show'])->name('admin.users.show');
 
 // Admin Dashboard ---------------------------------------
 Route::get('/admin',                            [AdminController::class, 'index'])->name('admin.index');
