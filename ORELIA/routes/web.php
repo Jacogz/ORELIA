@@ -7,12 +7,17 @@ use App\Http\Controllers\OrderController;
 use App\Http\Controllers\OrderItemController;
 use App\Http\Controllers\PieceController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\HomeController;
 
 use Illuminate\Support\Facades\Route;
 
+Auth::routes();
+
+Route::get('/',                                 [HomeController::class, 'index'])->name('home');
+
 // Pieces ---------------------------------
 // Public routes
-Route::get('/',                                 [PieceController::class, 'index'])->name('pieces.index');
+Route::get('/pieces',                           [PieceController::class, 'index'])->name('pieces.index');
 Route::get('/pieces/{id}',                      [PieceController::class, 'show'])->name('pieces.show');
 // Admin routes
 Route::get('/admin/pieces/create',              [PieceController::class, 'create'])->name('pieces.create');
@@ -77,3 +82,5 @@ Route::get('/admin/users/{id}',                 [UserController::class, 'show'])
 
 // Admin Dashboard ---------------------------------------
 Route::get('/admin',                            [AdminController::class, 'index'])->name('admin.index');
+
+

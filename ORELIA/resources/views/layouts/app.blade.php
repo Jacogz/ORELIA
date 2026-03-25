@@ -10,7 +10,7 @@
 <body>
     <nav class="navbar navbar-expand-lg navbar-dark py-4">
         <div class="container">
-            <a class="navbar-brand fw-bold" href="{{ route('pieces.index') }}">ORELIA</a>
+            <a class="navbar-brand fw-bold" href="{{ route('home') }}">ORELIA</a>
 
             <div class="d-flex align-items-center ms-auto">
                 <a class="nav-link" href="{{ route('materials.index') }}">Catalog</a>
@@ -19,21 +19,18 @@
                 <a class="nav-link" href="{{ route('orders.index') }}">Orders</a>
                 <a class="nav-link" href="{{ route('orderitems.index') }}">Order Items</a>
 
-                @auth
-                    @if(Auth::user()->get_role() === 'admin')
-                        <a class="nav-link" href="{{ route('admin.index') }}">Admin Panel</a>
-                    @endif
-
-                    <span class="me-3">Hola, {{ Auth::user()->get_name() }}</span>
-                    <form action="{{ route('users.logout') }}" method="POST" class="mb-0">
-                        @csrf
-                        <button type="submit" class="btn btn-secondary btn-sm">Cerrar Sesion</button>
-                    </form>
-                @endauth
-
-                @guest
-                    <a class="btn btn-primary btn-sm ms-2" href="{{ route('users.login') }}">Login</a>
-                @endguest
+              <div class="vr bg-white mx-2 d-none d-lg-block"></div> 
+                @guest 
+                  <a class="nav-link active" href="{{ route('login') }}">Login</a> 
+                  <a class="nav-link active" href="{{ route('register') }}">Register</a> 
+                    @else 
+                  <form id="logout" action="{{ route('logout') }}" method="POST"> 
+                    <a role="button" class="nav-link active" 
+                       onclick="document.getElementById('logout').submit();">Logout</a> 
+                    @csrf 
+                  </form> 
+                @endguest 
+              </div> 
             </div>
         </div>
     </nav>
