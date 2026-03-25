@@ -1,5 +1,6 @@
 <?php
-/*
+/* 
+ * Author: Jacobo Giraldo Zuluaga-Jeremias Figueroa Garcia 
  * File: PieceController.php
  * Description: Handles HTTP request/response cycle for Piece resources.
  *              All model interaction is delegated to PieceService.
