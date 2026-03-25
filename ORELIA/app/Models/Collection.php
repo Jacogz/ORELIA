@@ -1,6 +1,6 @@
 <?php
 /*
- * Author: Jeremias Figueroa Garcia
+ * Author: Jacobo Giraldo Zuluaga-Jeremias Figueroa Garcia
  * File: Collection.php
  * Description: Collection model with getters/setters
  * Created: 2026-03-23

@@ -1,5 +1,6 @@
 <?php
 /*
+ * Author: Isabella Hernandez Posada-Jacobo Giraldo Zuluaga
  * File: OrderItemController.php
  * Description: Handles HTTP request/response cycle for OrderItem resources.
  *              All model interaction is delegated to OrderItemService.

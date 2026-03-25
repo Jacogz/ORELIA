@@ -1,10 +1,10 @@
 @extends('layouts.app')
 
-@section('title', $viewData['title'])
+@section('title', $view_data['title'])
 
 @section('content')
 <div class="container mt-4">
-  <h1>{{ $viewData['title'] }}</h1>
+  <h1>{{ $view_data['title'] }}</h1>
 
   <form action="{{ route('orders.store') }}" method="POST" class="card p-4">
     @csrf

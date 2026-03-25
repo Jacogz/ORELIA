@@ -1,5 +1,6 @@
 <?php
 /*
+ * Author: Isabella Hernandez Posada-Jacobo Giraldo Zuluaga
  * File: UserController.php
  * Description: Handles HTTP request/response cycle for User resources and
  *              authentication flow. CRUD operations are delegated to UserService.

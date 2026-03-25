@@ -1,5 +1,6 @@
 <?php
 /*
+ * Author: Isabella Hernandez Posada-Jacobo Giraldo Zuluaga
  * File: MaterialController.php
  * Description: Handles HTTP request/response cycle for Material resources.
  *              All model interaction is delegated to MaterialService.

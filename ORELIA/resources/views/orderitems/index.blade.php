@@ -19,7 +19,7 @@
       </tr>
     </thead>
     <tbody>
-      @foreach($view_data['orderitems'] as $orderitem)
+      @foreach($view_data['order_items'] as $orderitem)
         <tr>
           <td>{{ $orderitem->get_id() }}</td>
           <td>{{ $orderitem->get_unit_price() }}</td>

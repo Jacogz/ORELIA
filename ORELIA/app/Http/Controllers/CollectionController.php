@@ -1,5 +1,6 @@
 <?php
-/*
+/* 
+ * Author: Jacobo Giraldo Zuluaga-Jeremias Figueroa Garcia 
  * File: CollectionController.php
  * Description: Handles HTTP request/response cycle for Collection resources.
  *              All model interaction is delegated to CollectionService.
