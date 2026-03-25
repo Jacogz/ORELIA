@@ -12,44 +12,44 @@
       <div class="card-body">
         <div class="row mb-3">
           <div class="col-md-6">
-            <label class="form-label fw-bold">ID:</label>
+            <label class="form-label fw-bold">{{ __('forms.id') }}:</label>
             <p class="text-muted">{{ $view_data['material']->get_id() }}</p>
           </div>
           <div class="col-md-6">
-            <label class="form-label fw-bold">Name:</label>
+            <label class="form-label fw-bold">{{ __('forms.name') }}:</label>
             <p class="text-muted">{{ $view_data['material']->get_name() }}</p>
           </div>
         </div>
 
         <div class="row mb-3">
           <div class="col-md-6">
-            <label class="form-label fw-bold">Type:</label>
+            <label class="form-label fw-bold">{{ __('forms.type') }}:</label>
             <p class="text-muted">{{ $view_data['material']->get_type() }}</p>
           </div>
           <div class="col-md-6">
-            <label class="form-label fw-bold">Color:</label>
+            <label class="form-label fw-bold">{{ __('forms.color') }}:</label>
             <p class="text-muted">{{ $view_data['material']->get_color() }}</p>
           </div>
         </div>
 
         <div class="mb-3">
-          <label class="form-label fw-bold">Description:</label>
+          <label class="form-label fw-bold">{{ __('forms.description') }}:</label>
           <p class="text-muted">{{ $view_data['material']->get_description() }}</p>
         </div>
 
         <div class="row mb-3">
           <div class="col-md-6">
-            <label class="form-label fw-bold">Created:</label>
+            <label class="form-label fw-bold">{{ __('forms.created') }}:</label>
             <p class="text-muted">{{ $view_data['material']->get_created_at() }}</p>
           </div>
           <div class="col-md-6">
-            <label class="form-label fw-bold">Updated:</label>
+            <label class="form-label fw-bold">{{ __('forms.updated') }}:</label>
             <p class="text-muted">{{ $view_data['material']->get_updated_at() }}</p>
           </div>
         </div>
 
         <div class="d-flex gap-2">
-          <a href="{{ route('materials.index') }}" class="btn btn-secondary">Back</a>
+          <a href="{{ route('materials.index') }}" class="btn btn-secondary">{{ __('actions.back') }}</a>
         </div>
       </div>
     </div>

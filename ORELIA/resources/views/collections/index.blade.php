@@ -10,10 +10,10 @@
     <table class="table table-striped">
       <thead>
         <tr>
-          <th>ID</th>
-          <th>Name</th>
-          <th>Creation Date</th>
-          <th>Action</th>
+          <th>{{ __('forms.id') }}</th>
+          <th>{{ __('forms.name') }}</th>
+          <th>{{ __('collections.creation_date') }}</th>
+          <th>{{ __('materials.action') }}</th>
         </tr>
       </thead>
       <tbody>
@@ -23,14 +23,14 @@
             <td>{{ $collection->get_name() }}</td>
             <td>{{ $collection->get_creation_date() }}</td>
             <td>
-              <a href="{{ route('collections.show', $collection->get_id()) }}" class="btn btn-info btn-sm">View</a>
+              <a href="{{ route('collections.show', $collection->get_id()) }}" class="btn btn-info btn-sm">{{ __('actions.view') }}</a>
             </td>
           </tr>
         @endforeach
       </tbody>
     </table>
   @else
-    <div class="alert alert-info">No collections found.</div>
+    <div class="alert alert-info">{{ __('collections.no_collections_found') }}</div>
   @endif
 </div>
 @endsection

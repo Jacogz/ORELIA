@@ -10,13 +10,13 @@
     <table class="table table-striped">
       <thead>
         <tr>
-          <th>ID</th>
-          <th>Total</th>
-          <th>Status</th>
-          <th>Client ID</th>
-          <th>Payment Method</th>
-          <th>Payment Status</th>
-          <th>Action</th>
+          <th>{{ __('forms.id') }}</th>
+          <th>{{ __('forms.total') }}</th>
+          <th>{{ __('forms.status') }}</th>
+          <th>{{ __('forms.client_id') }}</th>
+          <th>{{ __('forms.payment_method') }}</th>
+          <th>{{ __('forms.payment_status') }}</th>
+          <th>{{ __('materials.action') }}</th>
         </tr>
       </thead>
       <tbody>
@@ -29,14 +29,14 @@
             <td>{{ $order->get_payment_method() }}</td>
             <td>{{ $order->get_payment_status() }}</td>
             <td>
-              <a href="{{ route('orders.show', $order->get_id()) }}" class="btn btn-info btn-sm">View</a>
+              <a href="{{ route('orders.show', $order->get_id()) }}" class="btn btn-info btn-sm">{{ __('actions.view') }}</a>
             </td>
           </tr>
         @endforeach
       </tbody>
     </table>
   @else
-    <div class="alert alert-info">No orders found.</div>
+    <div class="alert alert-info">{{ __('orders.no_orders_found') }}</div>
   @endif
 </div>
 @endsection
