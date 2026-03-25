@@ -18,6 +18,8 @@
                 <a class="nav-link" href="{{ route('pieces.index') }}">{{ __('navigation.pieces') }}</a>
                 <a class="nav-link" href="{{ route('orders.index') }}">{{ __('navigation.orders') }}</a>
                 <a class="nav-link" href="{{ route('orderitems.index') }}">{{ __('navigation.order_items') }}</a>
+                <a class="nav-link" href="{{ route('cart.index') }}">{{ __('navigation.shopping_cart') }}</a>
+                <a class="nav-link" href="{{ route('history.index') }}">{{ __('navigation.history') }}</a>
 
                 @auth
                     @if(Auth::user()->get_role() === 'admin')

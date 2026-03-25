@@ -13,4 +13,6 @@ return [
     'logout' => 'Cerrar Sesión',
     'register' => 'Registrarse',
     'close' => 'Cerrar',
+    'cart_empty' => 'Tu carrito de compras está vacío.',
+    'history_empty' => 'Aún no tienes historial de pedidos.',
 ];

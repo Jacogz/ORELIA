@@ -58,6 +58,39 @@ class OrderService
         return Order::findOrFail($id);
     }
 
+    /**
+     * Get all orders for a specific client with a specific status.
+     *
+     * @param int    $client_id The client user ID
+     * @param string $status    The order status (e.g., 'processing', 'in_transit', 'completed')
+     *
+     * @return Collection<int, Order>
+     */
+    public function get_orders_by_status_and_client(int $client_id, string $status): Collection
+    {
+        return Order::where('client_id', $client_id)
+            ->where('status', $status)
+            ->with(['client', 'order_items'])
+            ->get();
+    }
+
+    /**
+     * Get all orders for a specific client with any of the specified statuses.
+     * More efficient than making multiple queries when filtering by multiple statuses.
+     *
+     * @param int   $client_id The client user ID
+     * @param array $statuses  Array of order statuses (e.g., ['in_transit', 'completed'])
+     *
+     * @return Collection<int, Order>
+     */
+    public function get_orders_by_statuses_and_client(int $client_id, array $statuses): Collection
+    {
+        return Order::where('client_id', $client_id)
+            ->whereIn('status', $statuses)
+            ->with(['client', 'order_items'])
+            ->get();
+    }
+
     // -------------------------------------------------------------------------
     // Write operations
     // -------------------------------------------------------------------------

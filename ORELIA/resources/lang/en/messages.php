@@ -13,4 +13,6 @@ return [
     'logout' => 'Logout',
     'register' => 'Register',
     'close' => 'Close',
+    'cart_empty' => 'Your shopping cart is empty.',
+    'history_empty' => 'You have no order history yet.',
 ];

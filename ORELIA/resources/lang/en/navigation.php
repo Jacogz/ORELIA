@@ -6,6 +6,8 @@ return [
     'pieces' => 'Pieces',
     'orders' => 'Orders',
     'order_items' => 'Order Items',
+    'shopping_cart' => 'Shopping Cart',
+    'history' => 'History',
     'admin_panel' => 'Admin Panel',
     'materials' => 'Materials',
     'users' => 'Users',

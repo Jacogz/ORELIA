@@ -1,7 +1,9 @@
 <?php
 
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\CartController;
 use App\Http\Controllers\CollectionController;
+use App\Http\Controllers\HistoryController;
 use App\Http\Controllers\MaterialController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\OrderItemController;
@@ -66,6 +68,12 @@ Route::get('/orderitems/{id}',                  [OrderItemController::class, 'sh
 Route::get('/admin/orderitems/{id}/edit',       [OrderItemController::class, 'edit'])->name('orderitems.edit');
 Route::put('/admin/orderitems/{id}',            [OrderItemController::class, 'update'])->name('orderitems.update');
 Route::delete('/admin/orderitems/{id}',         [OrderItemController::class, 'delete'])->name('orderitems.delete');
+
+// Shopping Cart -----------------------------------
+Route::get('/cart',                             [CartController::class, 'index'])->name('cart.index');
+
+// Order History -----------------------------------
+Route::get('/history',                          [HistoryController::class, 'index'])->name('history.index');
 
 // Users --------------------------------------
 // Public routes
